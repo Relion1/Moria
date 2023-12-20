@@ -20,7 +20,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             label2.Text = emailname;
@@ -72,7 +72,7 @@ namespace Moria
                 bunifuPanel1.Width -= 10;
                 if(bunifuPanel1.Size==bunifuPanel1.MinimumSize)
                 {
-                    bunifuPictureBox2.Left = 15;
+                    bunifuPictureBox2.Left = 2;
                     timer1.Stop();
                     check = true;
                     bunifuPictureBox2.Image = Resources.menu;
