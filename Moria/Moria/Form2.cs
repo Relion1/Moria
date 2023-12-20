@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-
+using Moria.Properties;
 
 namespace Moria
 {
@@ -20,7 +20,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             label2.Text = emailname;
@@ -37,7 +37,6 @@ namespace Moria
                 byte[] images = (byte[])dataReader["image"];
                 if (images == null)
                 {
-                    button1.Image = null;
                     //bunifuButton1.Image = null;
                 }
                 else
@@ -54,6 +53,48 @@ namespace Moria
             Form1 f1 = new Form1();
             this.Hide();
             f1.Show();
+        }
+        private bool check;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (check)
+            {
+                bunifuPanel1.Width += 10;
+                if(bunifuPanel1.Size == bunifuPanel1.MaximumSize) {
+                    bunifuPictureBox2.Left = +230;
+                    timer1.Stop();
+                    check = false;
+                    bunifuPictureBox2.Image = Resources.leftArrow;
+                }
+            }
+            else
+            {
+                bunifuPanel1.Width -= 10;
+                if(bunifuPanel1.Size==bunifuPanel1.MinimumSize)
+                {
+                    bunifuPictureBox2.Left = 15;
+                    timer1.Stop();
+                    check = true;
+                    bunifuPictureBox2.Image = Resources.menu;
+                }
+            }
+        }
+
+        private void bunifuPictureBox2_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void bunifuPictureBox3_Click(object sender, EventArgs e)
+        {
+            if(bunifuPanel6.Visible == false)
+            {
+                bunifuPanel6.Visible = true;
+            }
+            else
+            {
+                bunifuPanel6.Visible = false;
+            }
         }
     }
 }
