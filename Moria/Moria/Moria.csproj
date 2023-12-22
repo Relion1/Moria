@@ -139,5 +139,20 @@
   <ItemGroup>
     <None Include="Resources\3nokta.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\png-transparent-chat-email-envelope-letter-mail-message-user-interface-essential-solid-icon-thumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\png-transparent-password-manager-computer-icons-password-strength-password-safe-chang-miscellaneous-password-strength-password-safe-thumbnail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gri sifre.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\maillll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sifreee.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

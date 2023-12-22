@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Moria
 {
@@ -25,7 +26,7 @@ namespace Moria
         Color btn = Color.SpringGreen;
         Color btr = Color.FromArgb(137, 140, 142);
         Color bb = Color.DarkSlateGray;
-        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form1_Load(object sender, EventArgs e)
         {
             BtnLogin.PerformClick();
@@ -53,37 +54,51 @@ namespace Moria
             }
             else 
             {
-                if (string.IsNullOrEmpty(bunifuTextBox4.Text.Trim()))
+                if (string.IsNullOrEmpty(bunifuTextBox4.Text.Trim())) //firstname
                 {
                     errorProvider1.SetError(bunifuTextBox4, "Bos gecemessin");
                     return;
                 }
                 else
                 {
-                    errorProvider1.SetError(bunifuTextBox4, string.Empty);
+                    errorProvider1.SetError(bunifuTextBox4, string.Empty); 
                 }
 
-                if (string.IsNullOrEmpty(bunifuTextBox3.Text.Trim()))
+                if (string.IsNullOrEmpty(bunifuTextBox3.Text.Trim())) //lastname
                 {
                     errorProvider1.SetError(bunifuTextBox3, "Bos gecemessin");
                     return;
                 }
                 else
                 {
-                    errorProvider1.SetError(bunifuTextBox3, string.Empty);
+                    errorProvider1.SetError(bunifuTextBox3, string.Empty); 
                 }
 
-                if (string.IsNullOrEmpty(bunifuTextBox5.Text.Trim()))
+                if (string.IsNullOrEmpty(bunifuTextBox5.Text.Trim())) //email
                 {
                     errorProvider1.SetError(bunifuTextBox5, "Bos gecemessin");
                     return;
                 }
                 else
                 {
-                    errorProvider1.SetError(bunifuTextBox5, string.Empty);
+                    errorProvider1.SetError(bunifuTextBox5, string.Empty); 
                 }
 
-                if (string.IsNullOrEmpty(bunifuTextBox6.Text.Trim()))
+
+                string validEmail = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
+                if (Regex.IsMatch(bunifuTextBox5.Text, validEmail))
+                {
+                    errorProvider1.Clear();
+                }
+                else
+                {
+                    errorProvider1.SetError(this.bunifuTextBox5, "Please provide vaild Mail address");
+                    return;
+                }
+
+
+
+                if (string.IsNullOrEmpty(bunifuTextBox6.Text.Trim())) //password
                 {
                     errorProvider1.SetError(bunifuTextBox6, "Bos gecemessin");
                     return;
@@ -93,7 +108,7 @@ namespace Moria
                     errorProvider1.SetError(bunifuTextBox6, string.Empty);
                 }
 
-                if (string.IsNullOrEmpty(bunifuTextBox7.Text.Trim()))
+                if (string.IsNullOrEmpty(bunifuTextBox7.Text.Trim())) //confirmpassword
                 {
                     errorProvider1.SetError(bunifuTextBox7, "Bos gecemessin");
                     return;
