@@ -21,7 +21,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             LoadFormData();
@@ -33,7 +33,7 @@ namespace Moria
             label2.Text = emailname;
             byte[] getimage = new byte[0];
             SqlConnection con = new SqlConnection(constring);
-            string q = "SELECT * FROM Login WHERE email='" + label2.Text + "'"; //label2.text sol bardaki email yazısı bu yazıya göre kullanıcı seçiliyor veritabanında
+            string q = "SELECT * FROM Login WHERE email='" + emailname + "'"; //label2.text sol bardaki email yazısı bu yazıya göre kullanıcı seçiliyor veritabanında
             SqlCommand cmd = new SqlCommand(q, con);
             con.Open();
             SqlDataReader dataReader = cmd.ExecuteReader();

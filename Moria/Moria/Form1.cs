@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Net.Mail;
+using System.Net;
 
 namespace Moria
 {
@@ -23,13 +25,21 @@ namespace Moria
 
         }
 
+        String randomCode;
+        public static String to;
+        private bool emailDogrulandimi = false;
+
         Color btn = Color.SpringGreen;
         Color btr = Color.FromArgb(137, 140, 142);
         Color bb = Color.DarkSlateGray;
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form1_Load(object sender, EventArgs e)
         {
             BtnLogin.PerformClick();
+            bunifuButton4.Enabled = false;
+            bunifuTextBox2.PasswordChar = '*';
+            bunifuTextBox6.PasswordChar = '*';
+            bunifuTextBox7.PasswordChar = '*';
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -96,7 +106,11 @@ namespace Moria
                     return;
                 }
 
-
+                if (!emailDogrulandimi)
+                {
+                    MessageBox.Show("E-postanı doğrulaman gerekir");
+                    return;
+                }
 
                 if (string.IsNullOrEmpty(bunifuTextBox6.Text.Trim())) //password
                 {
@@ -209,6 +223,51 @@ namespace Moria
                 f2.emailname = bunifuTextBox1.Text;
                 this.Hide();
                 f2.Show();
+            }
+        }
+
+        private void kodDogrulaBtn_Click(object sender, EventArgs e)
+        {
+            String from, pass, messageBody;
+            Random rand = new Random();
+            randomCode = (rand.Next(999999)).ToString();
+            MailMessage message = new MailMessage();
+            to = (bunifuTextBox5.Text).ToString();
+            from = "nova.turhan@yandex.com";
+            pass = "kslhgcuifgohlzgp";
+            messageBody = "Your reset code is " + randomCode;
+            message.To.Add(to);
+            message.From = new MailAddress(from);
+            message.Body = messageBody;
+            message.Subject = "Password Reseting Code";
+            SmtpClient smtp = new SmtpClient("smtp.yandex.com");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.Credentials = new NetworkCredential(from, pass);
+
+            try
+            {
+                smtp.Send(message);
+                MessageBox.Show("Code Send Successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void emailKoduGiris_Click(object sender, EventArgs e)
+        {
+            if (randomCode == (emailDogruGirisi.Text).ToString())
+            {
+                to = emailDogruGirisi.Text;
+                emailDogrulandimi = true;
+                bunifuButton4.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Wrong Code");
             }
         }
     }
