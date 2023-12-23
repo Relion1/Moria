@@ -21,7 +21,8 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        //string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Server=sql11.freesqldatabase.com;Database=sql11672384;User Id=sql11672384;Password=vQHRG3KsyZ;";
         private void Form2_Load(object sender, EventArgs e)
         {
             LoadFormData();
@@ -219,7 +220,8 @@ namespace Moria
 
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string q = "UPDATE login SET password ='"+bunifuTextBox4.Text+"',firstname=@fname,lastname=@lname,email=@email,image=@image";
+            string q = $"UPDATE login SET firstname=@fname, lastname=@lname, email=@email WHERE email = '{emailname}'";
+            emailname = bunifuTextBox7.Text;
             MemoryStream me = new MemoryStream();
             bunifuPictureBox5.Image.Save(me, bunifuPictureBox1.Image.RawFormat);
             SqlCommand cmd = new SqlCommand(q, con);
@@ -231,6 +233,7 @@ namespace Moria
             con.Close();
             MessageBox.Show("Profile is updated");
             LoadFormData();
+
 
 
         }

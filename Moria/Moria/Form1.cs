@@ -32,7 +32,7 @@ namespace Moria
         Color btn = Color.SpringGreen;
         Color btr = Color.FromArgb(137, 140, 142);
         Color bb = Color.DarkSlateGray;
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Server=sql11.freesqldatabase.com;Database=sql11672384;User Id=sql11672384;Password=vQHRG3KsyZ;";
         private void Form1_Load(object sender, EventArgs e)
         {
             BtnLogin.PerformClick();
