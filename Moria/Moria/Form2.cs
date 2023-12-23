@@ -21,8 +21,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        //string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
-        string constring = "Server=sql11.freesqldatabase.com;Database=sql11672384;User Id=sql11672384;Password=vQHRG3KsyZ;";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             LoadFormData();
