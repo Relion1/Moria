@@ -32,11 +32,11 @@ namespace Moria
         Color btn = Color.SpringGreen;
         Color btr = Color.FromArgb(137, 140, 142);
         Color bb = Color.DarkSlateGray;
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form1_Load(object sender, EventArgs e)
         {
             BtnLogin.PerformClick();
-            bunifuButton4.Enabled = false;
+            //bunifuButton4.Enabled = false;
             bunifuTextBox2.PasswordChar = '*';
             bunifuTextBox6.PasswordChar = '*';
             bunifuTextBox7.PasswordChar = '*';
@@ -94,6 +94,40 @@ namespace Moria
                     errorProvider1.SetError(bunifuTextBox5, string.Empty); 
                 }
 
+                var sifre = bunifuTextBox6.Text;
+
+                var hasUpperChar = new Regex(@"[A-Z]+");
+                var hasLowerChar = new Regex(@"[a-z]+");
+                var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]}; :<>|./?,-]");
+                var hasNumber = new Regex(@"[0-9]+");
+                var hasMiniMaxChars = new Regex(@".{8,8}");
+
+                if (!hasLowerChar.IsMatch(sifre))
+                {
+                    MessageBox.Show("Sifre En az bir kucuk harf icermelidir");
+                    return;
+                }
+                else if (!hasUpperChar.IsMatch(sifre))
+                {
+                    MessageBox.Show("Sifre En az bir buyuk harf icermelidir");
+                    return;
+                }
+                else if (!hasSymbols.IsMatch(sifre))
+                {
+                    MessageBox.Show("Sifre En az bir ozel karakter icermelidir");
+                    return;
+                }
+                else if (!hasNumber.IsMatch(sifre))
+                {
+                    MessageBox.Show("Sifre En az bir numara icermelidir");
+                    return;
+                }
+                else if (!hasMiniMaxChars.IsMatch(sifre))
+                {
+                    MessageBox.Show("Sifre 8 karakterden az olmamalidir");
+                    return;
+                }
+
 
                 string validEmail = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
                 if (Regex.IsMatch(bunifuTextBox5.Text, validEmail))
@@ -145,7 +179,7 @@ namespace Moria
                     cmd.Parameters.AddWithValue("firstname", bunifuTextBox4.Text);
                     cmd.Parameters.AddWithValue("lastname", bunifuTextBox3.Text);
                     cmd.Parameters.AddWithValue("email", bunifuTextBox5.Text);
-                    cmd.Parameters.AddWithValue("password", bunifuTextBox6.Text);
+                    cmd.Parameters.AddWithValue("password", sifre);
                     cmd.Parameters.AddWithValue("confirmpassword", bunifuTextBox7.Text);
                     cmd.Parameters.AddWithValue("image", me.ToArray());
                     con.Open();
@@ -235,7 +269,7 @@ namespace Moria
             to = (bunifuTextBox5.Text).ToString();
             from = "nova.turhan@yandex.com";
             pass = "kslhgcuifgohlzgp";
-            messageBody = "Your reset code is " + randomCode;
+            messageBody = "Doğrulama kodunuz: " + randomCode;
             message.To.Add(to);
             message.From = new MailAddress(from);
             message.Body = messageBody;
@@ -274,6 +308,32 @@ namespace Moria
         private void bunifuTextBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void registerShowPass_CheckedChanged(object sender, EventArgs e)
+        {
+            if(registerShowPass.Checked)
+            {
+                bunifuTextBox6.PasswordChar = '\0';
+                bunifuTextBox7.PasswordChar = '\0';
+            }
+            else
+            {
+                bunifuTextBox6.PasswordChar = '*';
+                bunifuTextBox7.PasswordChar = '*';
+            }
+        }
+
+        private void loginShowPass_CheckedChanged(object sender, EventArgs e)
+        {
+            if(loginShowPass.Checked)
+            {
+                bunifuTextBox2.PasswordChar = '\0';
+            }
+            else
+            {
+                bunifuTextBox2.PasswordChar = '*';
+            }
         }
     }
 }

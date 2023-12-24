@@ -21,7 +21,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             LoadFormData();
@@ -398,7 +398,7 @@ namespace Moria
             }
             else if (!hasMiniMaxChars.IsMatch(input))
             {
-                MessageBox.Show("Sifre 8 karakterden az veya fazla olmamalidir");
+                MessageBox.Show("Sifre 8 karakterden az olmamalidir");
                 return;
             }
             else
@@ -413,13 +413,20 @@ namespace Moria
             }
         }
 
-
-
-
-
-
-
-
-
+        private void passChangeShowPass_CheckedChanged(object sender, EventArgs e)
+        {
+            if(passChangeShowPass.Checked)
+            {
+                bunifuTextBox8.PasswordChar = '\0';
+                bunifuTextBox9.PasswordChar = '\0';
+                bunifuTextBox10.PasswordChar = '\0';
+            }
+            else
+            {
+                bunifuTextBox8.PasswordChar = '*';
+                bunifuTextBox9.PasswordChar = '*';
+                bunifuTextBox10.PasswordChar = '*';
+            }
+        }
     }
 }
