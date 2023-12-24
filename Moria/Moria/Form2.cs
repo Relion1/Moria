@@ -21,7 +21,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             LoadFormData();
@@ -164,7 +164,7 @@ namespace Moria
             }
         }
 
-        private void bunifuButton21_Click(object sender, EventArgs e) //bu save button
+        private void bunifuButton21_Click(object sender, EventArgs e) // SAVE BUTTON
         {
 
 
@@ -267,6 +267,7 @@ namespace Moria
 
         private void updateprofile_Click(object sender, EventArgs e)
         {
+            panel2.BringToFront();
             if (panel2.Visible == false)
             {
                 panel2.Visible = true;
@@ -295,5 +296,130 @@ namespace Moria
         {
             timer2.Start();
         }
+
+        private void updatepassword_Click(object sender, EventArgs e)
+        {
+            panel4.BringToFront();
+            if (panel4.Visible == false)
+            {
+                panel4.Visible = true;
+            }
+        }
+
+        private void bunifuPictureBox7_Click(object sender, EventArgs e)
+        {
+            if (panel4.Visible == true)
+            {
+                panel4.Visible = false;
+            }
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuTextBox9_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bunifuButton23_Click(object sender, EventArgs e) // SAVE2 BUTTON
+        {
+
+            if (string.IsNullOrEmpty(bunifuTextBox8.Text.Trim())) //boş geçemessin uyarısı şunun için bunifutextbox8=oldpassword
+            {
+                errorProvider1.SetError(bunifuTextBox8, "Bos gecemessin");
+                return;
+            }
+            else
+            {
+                errorProvider1.SetError(bunifuTextBox8, string.Empty);
+            }
+
+            if (string.IsNullOrEmpty(bunifuTextBox10.Text.Trim())) //boş geçemessin uyarısı şunun için bunifutextbox10=confirmpassword
+            {
+                errorProvider1.SetError(bunifuTextBox10, "Bos gecemessin");
+                return;
+            }
+            else
+            {
+                errorProvider1.SetError(bunifuTextBox10, string.Empty);
+            }
+            if(bunifuTextBox9.Text==bunifuTextBox10.Text)
+            {
+                validatepassword();
+            }
+            else
+            {
+                 MessageBox.Show("Sifre ve onay sifresi ayni olmak zorunda!");
+            }
+            
+
+        }
+
+
+        public void validatepassword() // sifre değiştirme kodu
+        {
+            var input = bunifuTextBox9.Text;
+
+            if (string.IsNullOrWhiteSpace(input)) //boş geçemessin uyarısı şunun için bunifutextbox9=confirmpassword
+            {
+                errorProvider1.SetError(bunifuTextBox9, "Sifre bos olmamalidir");
+                return;
+            }
+
+            var hasUpperChar = new Regex(@"[A-Z]+");
+            var hasLowerChar = new Regex(@"[a-z]+");
+            var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]}; :<>|./?,-]");
+            var hasNumber = new Regex(@"[0-9]+");
+            var hasMiniMaxChars = new Regex(@".{8,8}");
+
+
+            if (!hasLowerChar.IsMatch(input))
+            {
+                MessageBox.Show("Sifre En az bir kucuk harf icermelidir");
+                return;
+            }
+            else if (!hasUpperChar.IsMatch(input))
+            {
+                MessageBox.Show("Sifre En az bir buyuk harf icermelidir");
+                return;
+            }
+            else if (!hasSymbols.IsMatch(input))
+            {
+                MessageBox.Show("Sifre En az bir ozel karakter icermelidir");
+                return;
+            }
+            else if (!hasNumber.IsMatch(input))
+            {
+                MessageBox.Show("Sifre En az bir numara icermelidir");
+                return;
+            }
+            else if (!hasMiniMaxChars.IsMatch(input))
+            {
+                MessageBox.Show("Sifre 8 karakterden az veya fazla olmamalidir");
+                return;
+            }
+            else
+            {
+                SqlConnection con = new SqlConnection(constring);
+                con.Open();
+                SqlCommand cmd = new SqlCommand("UPDATE Login SET password ='" + bunifuTextBox9.Text + "',confirmpassword = '" + bunifuTextBox10.Text + "'where email = '" + label2.Text + "'and password = '" + bunifuTextBox8.Text + "'", con);
+
+                cmd.ExecuteNonQuery();
+                con.Close();
+                MessageBox.Show("Sifreniz Degistirildi");
+            }
+        }
+
+
+
+
+
+
+
+
+
     }
 }
