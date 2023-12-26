@@ -21,7 +21,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             LoadFormData();
@@ -267,11 +267,25 @@ namespace Moria
 
         private void updateprofile_Click(object sender, EventArgs e)
         {
+            if(bunifuPictureBox3.Visible == true)
+            {
+                bunifuPictureBox3.Visible = false;
+            }
+            
             panel2.BringToFront();
             if (panel2.Visible == false)
             {
                 panel2.Visible = true;
             }
+            if (panel4.Visible==true)
+            { 
+                panel4.Visible = false;
+            }
+
+
+
+
+
         }
 
         private void bunifuPictureBox6_Click(object sender, EventArgs e)
@@ -299,10 +313,21 @@ namespace Moria
 
         private void updatepassword_Click(object sender, EventArgs e)
         {
+
+            if (bunifuPictureBox3.Visible == true)
+            {
+                bunifuPictureBox3.Visible = false;
+            }
+
+
             panel4.BringToFront();
             if (panel4.Visible == false)
             {
                 panel4.Visible = true;
+            }
+            if (panel2.Visible==true)
+            {
+                panel2.Visible = false;
             }
         }
 
@@ -428,5 +453,89 @@ namespace Moria
                 bunifuTextBox10.PasswordChar = '*';
             }
         }
+
+        private void bunifuButton5_Click(object sender, EventArgs e) // CHAT BUTTON 
+        {
+
+            if (bunifuPictureBox3.Visible == true)
+            {
+                bunifuPictureBox3.Visible = false;
+            }
+
+
+            UserItem();
+            panel5.BringToFront();
+            if (panel2.Visible == true || panel4.Visible==true)
+            {
+                panel2.Visible = false;
+                panel4.Visible = false;
+            }
+                panel5.Visible = true;
+            
+        }
+
+        private void bunifuButton2_Click(object sender, EventArgs e) // HOME BUTTON
+        {
+
+
+            if (bunifuPictureBox3.Visible == false)
+            {
+                bunifuPictureBox3.Visible = true;
+            }
+
+
+            if (panel2.Visible == true || panel4.Visible == true || panel5.Visible == true)
+            {
+                panel2.Visible = false;
+                panel4.Visible = false;
+                panel5.Visible = false;
+            }
+        }
+
+
+        private void UserItem()
+        {
+            flowLayoutPanel1.Controls.Clear();
+            SqlDataAdapter adapter;
+            adapter = new SqlDataAdapter("select * from Login", constring);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            if(table !=null)
+            {
+                if(table.Rows.Count > 0)
+                {
+                    UserControl1[] userControls = new UserControl1[table.Rows.Count];
+
+                    for(int i = 0; i < 1; i++)
+                    {
+                        foreach(DataRow row in table.Rows)
+                        {
+
+                        userControls[i] = new UserControl1();
+                        MemoryStream stream = new MemoryStream((byte[])row["image"]);
+                        userControls[i].Icon = new Bitmap(stream);
+                        userControls[i].Title = row["firstname"].ToString();
+
+                        if (userControls[i].Title == bunifuTextBox1.Text)
+                            {
+                                flowLayoutPanel1.Controls.Remove(userControls[i]);
+                            }
+                        else
+                            {
+                                flowLayoutPanel1.Controls.Add(userControls[i]);
+                            }
+                            userControls[i].Click += new System.EventHandler(this.bunifuButton5_Click);
+                        
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
     }
 }
