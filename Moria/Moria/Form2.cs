@@ -22,10 +22,15 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
+            Timer timer = new Timer();
+            timer.Interval = (10 * 1000);
+            timer.Tick += new EventHandler(timer3_Tick);
+            timer.Start();
             LoadFormData();
+            MessageChat();
         }
 
         private void LoadFormData()
@@ -526,8 +531,7 @@ namespace Moria
                             {
                                 flowLayoutPanel1.Controls.Add(userControls[i]);
                             }
-                            userControls[i].Click += new System.EventHandler(this.bunifuButton5_Click);
-                        
+                            userControls[i].Click += new System.EventHandler(this.userControl11_Load);
                         }
                     }
                 }
@@ -536,15 +540,14 @@ namespace Moria
 
         private void bunifuButton7_Click(object sender, EventArgs e) // mesaj gönderme buttonu
         {
-
-            flowLayoutPanel2.Controls.Clear();
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string q = "insert into Chat(userone,usertwo,message)values(userone=@userone,usertwo=@usertwo,message=@message)";
+            string q = "insert into Chat(userone,usertwo,message)values(@userone,@usertwo,@message)";
             SqlCommand cmd = new SqlCommand(q, con);
             cmd.Parameters.AddWithValue("@userone",bunifuTextBox1.Text);
-            cmd.Parameters.AddWithValue("@usetwo",bunifuLabel1.Text);
+            cmd.Parameters.AddWithValue("@usertwo",bunifuLabel1.Text);
             cmd.Parameters.AddWithValue("@message",bunifuTextBox11.Text);
+            cmd.ExecuteNonQuery();
             con.Close();
             MessageChat();
             bunifuTextBox11.Clear();
@@ -560,48 +563,71 @@ namespace Moria
 
             if (table != null)
             {
-                UserControl2[] userControls2s = new UserControl2[table.Rows.Count];
-                UserControl3[] userControls3s = new UserControl3[table.Rows.Count];
+                if (table.Rows.Count > 0) {
+                    UserControl2[] userControls2s = new UserControl2[table.Rows.Count];
+                    UserControl3[] userControls3s = new UserControl3[table.Rows.Count];
 
-                for (int i = 0; i < 1; i++)
-                {
-                    foreach (DataRow row in table.Rows)
+                    for (int i = 0; i < 1; i++)
                     {
-                        if (label2.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
+                        foreach (DataRow row in table.Rows)
                         {
-                            userControls2s[i] = new UserControl2();
-                            userControls2s[i].Dock = DockStyle.Top;
-                            userControls2s[i].BringToFront();
-                            userControls2s[i].Title = row["message"].ToString();
+                            if (bunifuTextBox1.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
+                            {
+                                userControls2s[i] = new UserControl2();
+                                userControls2s[i].Dock = DockStyle.Top;
+                                userControls2s[i].BringToFront();
+                                userControls2s[i].Title = row["message"].ToString();
 
-                            flowLayoutPanel2.Controls.Add(userControls2s[i]);
-                            flowLayoutPanel2.ScrollControlIntoView(userControls2s[i]);
+                                flowLayoutPanel2.Controls.Add(userControls2s[i]);
+                                flowLayoutPanel2.ScrollControlIntoView(userControls2s[i]);
 
-                        }
-                        else if(bunifuLabel1.Text == row["userone"].ToString() && label2.Text == row["usertwo"].ToString())
-                        {
-                            userControls3s[i] = new UserControl3();
-                            userControls3s[i].Dock = DockStyle.Top;
-                            userControls3s[i].BringToFront();
-                            userControls3s[i].Title = row["message"].ToString();
-                            userControls3s[i].Icon = bunifuPictureBox8.Image;
+                            }
+                            else if (bunifuLabel1.Text == row["userone"].ToString() && bunifuTextBox1.Text == row["usertwo"].ToString())
+                            {
+                                userControls3s[i] = new UserControl3();
+                                userControls3s[i].Dock = DockStyle.Top;
+                                userControls3s[i].BringToFront();
+                                userControls3s[i].Title = row["message"].ToString();
+                                userControls3s[i].Icon = bunifuPictureBox8.Image;
 
-                            flowLayoutPanel2.Controls.Add(userControls3s[i]);
-                            flowLayoutPanel2.ScrollControlIntoView(userControls3s[i]);
+                                flowLayoutPanel2.Controls.Add(userControls3s[i]);
+                                flowLayoutPanel2.ScrollControlIntoView(userControls3s[i]);
+                            }
+
                         }
 
                     }
-                  
                 }
-                
             }
             
         }
-
-        private void userControl11_Load(object sender, EventArgs e) // burada kaldım en son visible ayarları eklenmeli.
+        private void userControl11_Load(object sender, EventArgs e)
         {
+            if(panel6.Visible == false && panel7.Visible == false && flowLayoutPanel2.Visible == false)
+            {
+                panel6.Visible = true;
+                panel7.Visible = true;
+                flowLayoutPanel2.Visible = true;
+            }
+            UserControl1 control = (UserControl1)sender;
+            bunifuLabel1.Text = control.Title;
+            bunifuPictureBox8.Image = control.Icon;
+            MessageChat();
+        }
 
+        private void bunifuPictureBox9_Click(object sender, EventArgs e)
+        {
+            if (panel6.Visible == true && panel7.Visible == true && flowLayoutPanel2.Visible == true)
+            {
+                panel6.Visible = false;
+                panel7.Visible = false;
+                flowLayoutPanel2.Visible = false;
+            }
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            MessageChat();
         }
     }
-    
 }

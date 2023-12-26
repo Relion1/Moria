@@ -33,5 +33,10 @@ namespace Moria
            get { return _icon; }
            set { _icon = value; bunifuPictureBox1.Image = value; }
         }
+
+        private void UserControl1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
