@@ -311,3 +311,6 @@ C:\Users\user\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.csproj.CopyComp
 C:\Users\user\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.exe
 C:\Users\user\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.pdb
 C:\Users\user\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.UserControl1.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Debug\Moria.UserControl1.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Debug\Moria.UserControl2.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Debug\Moria.UserControl3.resources

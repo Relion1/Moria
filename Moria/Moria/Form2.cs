@@ -21,7 +21,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             LoadFormData();
@@ -532,10 +532,5 @@ namespace Moria
                 }
             }
         }
-
-
-
-
-
     }
 }
