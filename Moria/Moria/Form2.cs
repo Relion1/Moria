@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.IO;
 using Moria.Properties;
 using System.Text.RegularExpressions;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Moria
 {
@@ -21,7 +22,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             LoadFormData();
@@ -532,5 +533,75 @@ namespace Moria
                 }
             }
         }
+
+        private void bunifuButton7_Click(object sender, EventArgs e) // mesaj gönderme buttonu
+        {
+
+            flowLayoutPanel2.Controls.Clear();
+            SqlConnection con = new SqlConnection(constring);
+            con.Open();
+            string q = "insert into Chat(userone,usertwo,message)values(userone=@userone,usertwo=@usertwo,message=@message)";
+            SqlCommand cmd = new SqlCommand(q, con);
+            cmd.Parameters.AddWithValue("@userone",bunifuTextBox1.Text);
+            cmd.Parameters.AddWithValue("@usetwo",bunifuLabel1.Text);
+            cmd.Parameters.AddWithValue("@message",bunifuTextBox11.Text);
+            con.Close();
+            MessageChat();
+            bunifuTextBox11.Clear();
+        }
+
+        private void MessageChat()
+        {
+
+            SqlDataAdapter adapter;
+            adapter = new SqlDataAdapter("select * from Chat", constring);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            if (table != null)
+            {
+                UserControl2[] userControls2s = new UserControl2[table.Rows.Count];
+                UserControl3[] userControls3s = new UserControl3[table.Rows.Count];
+
+                for (int i = 0; i < 1; i++)
+                {
+                    foreach (DataRow row in table.Rows)
+                    {
+                        if (label2.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
+                        {
+                            userControls2s[i] = new UserControl2();
+                            userControls2s[i].Dock = DockStyle.Top;
+                            userControls2s[i].BringToFront();
+                            userControls2s[i].Title = row["message"].ToString();
+
+                            flowLayoutPanel2.Controls.Add(userControls2s[i]);
+                            flowLayoutPanel2.ScrollControlIntoView(userControls2s[i]);
+
+                        }
+                        else if(bunifuLabel1.Text == row["userone"].ToString() && label2.Text == row["usertwo"].ToString())
+                        {
+                            userControls3s[i] = new UserControl3();
+                            userControls3s[i].Dock = DockStyle.Top;
+                            userControls3s[i].BringToFront();
+                            userControls3s[i].Title = row["message"].ToString();
+                            userControls3s[i].Icon = bunifuPictureBox8.Image;
+
+                            flowLayoutPanel2.Controls.Add(userControls3s[i]);
+                            flowLayoutPanel2.ScrollControlIntoView(userControls3s[i]);
+                        }
+
+                    }
+                  
+                }
+                
+            }
+            
+        }
+
+        private void userControl11_Load(object sender, EventArgs e) // burada kaldım en son visible ayarları eklenmeli.
+        {
+
+        }
     }
+    
 }
