@@ -23,12 +23,9 @@ namespace Moria
             set { _title = value; bunifuLabel1.Text = value; AddHeighttext(); }
         }
         void AddHeighttext()
-        {  
-            UserControl2 user = new UserControl2();
-            user.BringToFront();
+        {
             bunifuLabel1.Height = Uilist.GeTTextHeight(bunifuLabel1) + 10;
-            user.Height = bunifuLabel1.Top + bunifuLabel1.Right;
-            this.Height = user.Bottom + 10;
+            this.Height = bunifuLabel1.Bottom + 10;
         }
 
         private void UserControl2_Load(object sender, EventArgs e)
