@@ -615,7 +615,12 @@ namespace Moria
             MessageChat();
         }
 
-        private void bunifuPictureBox9_Click(object sender, EventArgs e)
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            MessageChat();
+        }
+
+        private void bunifuPictureBox10_Click(object sender, EventArgs e)
         {
             if (panel6.Visible == true && panel7.Visible == true && flowLayoutPanel2.Visible == true)
             {
@@ -623,11 +628,6 @@ namespace Moria
                 panel7.Visible = false;
                 flowLayoutPanel2.Visible = false;
             }
-        }
-
-        private void timer3_Tick(object sender, EventArgs e)
-        {
-            MessageChat();
         }
     }
 }
