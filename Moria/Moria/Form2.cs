@@ -22,7 +22,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -555,52 +555,49 @@ namespace Moria
 
         private void MessageChat()
         {
-
             SqlDataAdapter adapter;
             adapter = new SqlDataAdapter("select * from Chat", constring);
             DataTable table = new DataTable();
             adapter.Fill(table);
 
-            if (table != null)
+            if (table != null && table.Rows.Count > 0)
             {
-                if (table.Rows.Count > 0) {
-                    UserControl2[] userControls2s = new UserControl2[table.Rows.Count];
-                    UserControl3[] userControls3s = new UserControl3[table.Rows.Count];
+                UserControl2[] userControls2s = new UserControl2[table.Rows.Count];
+                UserControl3[] userControls3s = new UserControl3[table.Rows.Count];
+                int userControl2Index = 0;
+                int userControl3Index = 0;
 
-                    for (int i = 0; i < 1; i++)
+                foreach (DataRow row in table.Rows)
+                {
+                    if (bunifuTextBox1.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
                     {
-                        foreach (DataRow row in table.Rows)
-                        {
-                            if (bunifuTextBox1.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
-                            {
-                                userControls2s[i] = new UserControl2();
-                                userControls2s[i].Dock = DockStyle.Top;
-                                userControls2s[i].BringToFront();
-                                userControls2s[i].Title = row["message"].ToString();
+                        userControls2s[userControl2Index] = new UserControl2();
+                        userControls2s[userControl2Index].Dock = DockStyle.Top;
+                        userControls2s[userControl2Index].BringToFront();
+                        userControls2s[userControl2Index].Title = row["message"].ToString();
 
-                                flowLayoutPanel2.Controls.Add(userControls2s[i]);
-                                flowLayoutPanel2.ScrollControlIntoView(userControls2s[i]);
+                        flowLayoutPanel2.Controls.Add(userControls2s[userControl2Index]);
+                        flowLayoutPanel2.ScrollControlIntoView(userControls2s[userControl2Index]);
 
-                            }
-                            else if (bunifuLabel1.Text == row["userone"].ToString() && bunifuTextBox1.Text == row["usertwo"].ToString())
-                            {
-                                userControls3s[i] = new UserControl3();
-                                userControls3s[i].Dock = DockStyle.Top;
-                                userControls3s[i].BringToFront();
-                                userControls3s[i].Title = row["message"].ToString();
-                                userControls3s[i].Icon = bunifuPictureBox8.Image;
+                        userControl2Index++;
+                    }
+                    else if (bunifuLabel1.Text == row["userone"].ToString() && bunifuTextBox1.Text == row["usertwo"].ToString())
+                    {
+                        userControls3s[userControl3Index] = new UserControl3();
+                        userControls3s[userControl3Index].Dock = DockStyle.Top;
+                        userControls3s[userControl3Index].BringToFront();
+                        userControls3s[userControl3Index].Title = row["message"].ToString();
+                        userControls3s[userControl3Index].Icon = bunifuPictureBox8.Image;
 
-                                flowLayoutPanel2.Controls.Add(userControls3s[i]);
-                                flowLayoutPanel2.ScrollControlIntoView(userControls3s[i]);
-                            }
+                        flowLayoutPanel2.Controls.Add(userControls3s[userControl3Index]);
+                        flowLayoutPanel2.ScrollControlIntoView(userControls3s[userControl3Index]);
 
-                        }
-
+                        userControl3Index++;
                     }
                 }
             }
-            
         }
+
         private void userControl11_Load(object sender, EventArgs e)
         {
             if(panel6.Visible == false && panel7.Visible == false && flowLayoutPanel2.Visible == false)
