@@ -25,7 +25,7 @@ namespace Moria
         void AddHeighttext()
         {
             bunifuLabel1.Height = Uilist.GeTTextHeight(bunifuLabel1) + 10;
-            this.Height = bunifuLabel1.Bottom + 10;
+            this.Height = bunifuLabel1.Bottom + 5;
         }
 
         private void UserControl2_Load(object sender, EventArgs e)

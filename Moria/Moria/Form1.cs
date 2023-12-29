@@ -50,7 +50,20 @@ namespace Moria
             panel2.BringToFront();
 
         }
-
+        private bool IsEmailExists(string email)
+        {
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                string query = "SELECT COUNT(*) FROM Login WHERE email = @email";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+                    int count = (int)cmd.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
         private void bunifuButton4_Click(object sender, EventArgs e)
         {
             
@@ -126,7 +139,11 @@ namespace Moria
                     return;
                 }
 
-
+                if (IsEmailExists(bunifuTextBox5.Text))
+                {
+                    MessageBox.Show("bu mail kullanılıyor.");
+                    return;
+                }
                 string validEmail = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
                 if (Regex.IsMatch(bunifuTextBox5.Text, validEmail))
                 {

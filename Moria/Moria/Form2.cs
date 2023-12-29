@@ -476,6 +476,7 @@ namespace Moria
                 panel2.Visible = false;
                 panel4.Visible = false;
             }
+
                 panel5.Visible = true;
             
         }
@@ -556,9 +557,12 @@ namespace Moria
         private void MessageChat()
         {
             SqlDataAdapter adapter;
-            adapter = new SqlDataAdapter("select * from Chat", constring);
+            adapter = new SqlDataAdapter("SELECT * FROM Chat WHERE (userone = @user1 AND usertwo = @user2) OR (userone = @user2 AND usertwo = @user1)", constring);
+            adapter.SelectCommand.Parameters.AddWithValue("@user1", bunifuLabel1.Text);
+            adapter.SelectCommand.Parameters.AddWithValue("@user2", bunifuTextBox1.Text);
             DataTable table = new DataTable();
             adapter.Fill(table);
+            flowLayoutPanel2.Controls.Clear();
 
             if (table != null && table.Rows.Count > 0)
             {
@@ -597,6 +601,7 @@ namespace Moria
                 }
             }
         }
+
 
         private void userControl11_Load(object sender, EventArgs e)
         {
