@@ -12,6 +12,7 @@ using System.IO;
 using Moria.Properties;
 using System.Text.RegularExpressions;
 using System.Diagnostics.Eventing.Reader;
+using System.Net.Mail;
 
 namespace Moria
 {
@@ -22,7 +23,7 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -170,6 +171,7 @@ namespace Moria
             }
         }
 
+        
         private void bunifuButton21_Click(object sender, EventArgs e) // SAVE BUTTON
         {
 
@@ -208,7 +210,7 @@ namespace Moria
                 errorProvider1.SetError(bunifuTextBox7, string.Empty);
             }
 
-
+         
 
             string validEmail = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
             if (Regex.IsMatch(bunifuTextBox7.Text, validEmail))
@@ -355,7 +357,7 @@ namespace Moria
 
         }
 
-        private void bunifuButton23_Click(object sender, EventArgs e) // SAVE2 BUTTON
+        private void bunifuButton23_Click(object sender, EventArgs e) // SAVE2 BUTTON (şifredeğiştirmeiçin)
         {
 
             if (string.IsNullOrEmpty(bunifuTextBox8.Text.Trim())) //boş geçemessin uyarısı şunun için bunifutextbox8=oldpassword
@@ -377,13 +379,21 @@ namespace Moria
             {
                 errorProvider1.SetError(bunifuTextBox10, string.Empty);
             }
-            if(bunifuTextBox9.Text==bunifuTextBox10.Text)
+
+
+            if (bunifuTextBox9.Text == bunifuTextBox10.Text && bunifuTextBox8.Text == bunifuTextBox4.Text)
             {
                 validatepassword();
             }
-            else
+            else if (bunifuTextBox8.Text != bunifuTextBox4.Text)
             {
-                 MessageBox.Show("Sifre ve onay sifresi ayni olmak zorunda!");
+                MessageBox.Show("Eski sifre yanlis!");
+                return;
+            }
+            else if (bunifuTextBox9.Text != bunifuTextBox10.Text)
+            {
+                MessageBox.Show("Sifre ve onay sifresi ayni olmak zorunda!");
+                return;
             }
             
 
@@ -441,6 +451,8 @@ namespace Moria
                 cmd.ExecuteNonQuery();
                 con.Close();
                 MessageBox.Show("Sifreniz Degistirildi");
+                bunifuTextBox4.Text = bunifuTextBox9.Text;
+                bunifuTextBox9.Text = string.Empty;
             }
         }
 
@@ -576,8 +588,8 @@ namespace Moria
                     if (bunifuTextBox1.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
                     {
                         userControls2s[userControl2Index] = new UserControl2();
-                        userControls2s[userControl2Index].Dock = DockStyle.Top;
-                        userControls2s[userControl2Index].BringToFront();
+                     //  userControls2s[userControl2Index].Dock = DockStyle.Top;   <--- bu kısımlar zaten designerde ayarlı
+                     //  userControls2s[userControl2Index].BringToFront();          <---
                         userControls2s[userControl2Index].Title = row["message"].ToString();
 
                         flowLayoutPanel2.Controls.Add(userControls2s[userControl2Index]);
@@ -588,8 +600,8 @@ namespace Moria
                     else if (bunifuLabel1.Text == row["userone"].ToString() && bunifuTextBox1.Text == row["usertwo"].ToString())
                     {
                         userControls3s[userControl3Index] = new UserControl3();
-                        userControls3s[userControl3Index].Dock = DockStyle.Top;
-                        userControls3s[userControl3Index].BringToFront();
+                     //  userControls3s[userControl3Index].Dock = DockStyle.Top;     <--- bu kısımlar zaten designerde ayarlı
+                     //  userControls3s[userControl3Index].BringToFront();            <---
                         userControls3s[userControl3Index].Title = row["message"].ToString();
                         userControls3s[userControl3Index].Icon = bunifuPictureBox8.Image;
 

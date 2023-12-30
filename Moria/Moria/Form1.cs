@@ -30,7 +30,7 @@ namespace Moria
         Color btn = Color.SpringGreen;
         Color btr = Color.FromArgb(137, 140, 142);
         Color bb = Color.DarkSlateGray;
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form1_Load(object sender, EventArgs e)
         {
             BtnLogin.PerformClick();
@@ -64,14 +64,16 @@ namespace Moria
                 }
             }
         }
-        private void bunifuButton4_Click(object sender, EventArgs e)
+
+
+        private void bunifuButton4_Click(object sender, EventArgs e) //kayıt olma buttonu
         {
             
            
             if (bunifuPictureBox1.Image == null)
             {
-                MessageBox.Show("Select a photo");
-               
+                MessageBox.Show("İf you want you can select a photo for your profile");
+
             }
             else 
             {
@@ -313,6 +315,7 @@ namespace Moria
                 to = emailDogruGirisi.Text;
                 emailDogrulandimi = true;
                 bunifuButton4.Enabled = true;
+                MessageBox.Show("Code İs Correct");
             }
             else
             {
@@ -349,6 +352,11 @@ namespace Moria
             {
                 bunifuTextBox2.PasswordChar = '*';
             }
+        }
+
+        private void bunifuCircleProgress1_ProgressChanged(object sender, Bunifu.UI.WinForms.BunifuCircleProgress.ProgressChangedEventArgs e)
+        {
+
         }
     }
 }
