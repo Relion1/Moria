@@ -13,6 +13,7 @@ using Moria.Properties;
 using System.Text.RegularExpressions;
 using System.Diagnostics.Eventing.Reader;
 using System.Net.Mail;
+using System.Net;
 
 namespace Moria
 {
@@ -23,7 +24,12 @@ namespace Moria
         {
             InitializeComponent();
         }
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+
+        String randomCode;
+        public static String to;
+        private bool emailDogrulandimi = false;
+
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -32,6 +38,8 @@ namespace Moria
             timer.Start();
             LoadFormData();
             MessageChat();
+            bunifuButton21.Enabled = false;
+            label13.Text = bunifuTextBox5.Text;
         }
 
         private void LoadFormData()
@@ -171,10 +179,63 @@ namespace Moria
             }
         }
 
-        
+        private bool IsEmailExists(string email)
+        {
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                con.Open();
+                string query = "SELECT COUNT(*) FROM Login WHERE email = @email";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+                    int count = (int)cmd.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
+
+        private void changeUserCredentials()
+        {
+            SqlConnection con = new SqlConnection(constring);
+            con.Open();
+            string updateChatQuery = $"UPDATE Chat SET userone = @newUsername WHERE userone = @oldUsername; " +
+                                     $"UPDATE Chat SET usertwo = @newUsername WHERE usertwo = @oldUsername";
+            SqlCommand updateChatCmd = new SqlCommand(updateChatQuery, con);
+            updateChatCmd.Parameters.AddWithValue("@newUsername", bunifuTextBox5.Text);
+            updateChatCmd.Parameters.AddWithValue("@oldUsername", label13.Text);
+            updateChatCmd.ExecuteNonQuery();
+
+            string updateLoginQuery = $"UPDATE login SET firstname=@fname, lastname=@lname, email=@email, image=@image WHERE email = '{emailname}'";
+            emailname = bunifuTextBox7.Text;
+
+            
+            byte[] imageBytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bunifuPictureBox5.Image.Save(ms, bunifuPictureBox1.Image.RawFormat);
+                imageBytes = ms.ToArray();//resmi sorguya eklememiş ondan olmuyormuş sorguya eklemek içinde byte dönüştürmek gerekiyordu onu yaptım
+                //register sayfasında var zaten aynı kod direk ona bakarak yaptım.
+            }
+            SqlCommand cmd = new SqlCommand(updateLoginQuery, con);
+            cmd.Parameters.AddWithValue("@fname", bunifuTextBox5.Text);
+            cmd.Parameters.AddWithValue("@lname", bunifuTextBox6.Text);
+            cmd.Parameters.AddWithValue("@email", bunifuTextBox7.Text);
+            cmd.Parameters.AddWithValue("@image", imageBytes);
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+            MessageBox.Show("Profile is updated, please restart the app for the change");
+            label13.Text = bunifuTextBox5.Text; //yeni kullanıcı ismini ekrana yazdırsın diye 
+            LoadFormData();
+        }
+
         private void bunifuButton21_Click(object sender, EventArgs e) // SAVE BUTTON
         {
-
+            if (!emailDogrulandimi)
+            {
+                MessageBox.Show("Önce e postanı doğrulaman gerekir");
+                return;
+            }
 
             if (string.IsNullOrEmpty(bunifuTextBox5.Text.Trim()))
             {
@@ -223,26 +284,27 @@ namespace Moria
                 return;
             }
 
+            if(emailname != bunifuTextBox7.Text)
+            {
+                if (!IsEmailExists(bunifuTextBox7.Text))//eğer uygulama kapatıpı açılmaz ise login page den giriş yapılamıyor restart gerekiyor
+                {
+                    //eğer adam emaili dahil her şeyi değiştirmek istiyorsa bu kod çalışıyor eğer sadece isim değişecekse mailler de çakışma yapar ondan 
+                    changeUserCredentials();
+                }
+                else
+                {
+                    MessageBox.Show("Bu email zaten kullanılıyor lütfen farklı bir mail deneyiniz");
+                }
+            }
+            else
+            {
+                //IsEmailExists fonksiyonunu çalıştırmadan değiştirme yapıyoruz bu saye de çakışma olmuyor 
+                //her iki ihtimaldede email değişiyor ama birinde aynı email üstüne yazılıyor ve zaten o mail doğrulanmış oldundan sıkıntı çıkmıcak
+                changeUserCredentials();
+            }
 
-
-            SqlConnection con = new SqlConnection(constring);
-            con.Open();
-            string q = $"UPDATE login SET firstname=@fname, lastname=@lname, email=@email WHERE email = '{emailname}'";
-            emailname = bunifuTextBox7.Text;
-            MemoryStream me = new MemoryStream();
-            bunifuPictureBox5.Image.Save(me, bunifuPictureBox1.Image.RawFormat);
-            SqlCommand cmd = new SqlCommand(q, con);
-            cmd.Parameters.AddWithValue("@fname", bunifuTextBox5.Text);
-            cmd.Parameters.AddWithValue("@lname", bunifuTextBox6.Text);
-            cmd.Parameters.AddWithValue("@email", bunifuTextBox7.Text);
-            cmd.Parameters.AddWithValue("@image", me.ToArray());
-            cmd.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Profile is updated");
-            LoadFormData();
-
-
-
+            bunifuButton21.Enabled = false;
+            emailDogrulandimi = false;
         }
 
         private void timer2_Tick(object sender, EventArgs e)
@@ -289,11 +351,6 @@ namespace Moria
             { 
                 panel4.Visible = false;
             }
-
-
-
-
-
         }
 
         private void bunifuPictureBox6_Click(object sender, EventArgs e)
@@ -588,8 +645,8 @@ namespace Moria
                     if (bunifuTextBox1.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
                     {
                         userControls2s[userControl2Index] = new UserControl2();
-                     //  userControls2s[userControl2Index].Dock = DockStyle.Top;   <--- bu kısımlar zaten designerde ayarlı
-                     //  userControls2s[userControl2Index].BringToFront();          <---
+                        //userControls2s[userControl2Index].Dock = DockStyle.Top; tasarımda var
+                        //userControls2s[userControl2Index].BringToFront();       tasarımda var
                         userControls2s[userControl2Index].Title = row["message"].ToString();
 
                         flowLayoutPanel2.Controls.Add(userControls2s[userControl2Index]);
@@ -600,8 +657,8 @@ namespace Moria
                     else if (bunifuLabel1.Text == row["userone"].ToString() && bunifuTextBox1.Text == row["usertwo"].ToString())
                     {
                         userControls3s[userControl3Index] = new UserControl3();
-                     //  userControls3s[userControl3Index].Dock = DockStyle.Top;     <--- bu kısımlar zaten designerde ayarlı
-                     //  userControls3s[userControl3Index].BringToFront();            <---
+                        //userControls3s[userControl3Index].Dock = DockStyle.Top; tasarımda var
+                        //userControls3s[userControl3Index].BringToFront();       tasarımda var
                         userControls3s[userControl3Index].Title = row["message"].ToString();
                         userControls3s[userControl3Index].Icon = bunifuPictureBox8.Image;
 
@@ -641,6 +698,60 @@ namespace Moria
                 panel6.Visible = false;
                 panel7.Visible = false;
                 flowLayoutPanel2.Visible = false;
+            }
+        }
+
+        private void bunifuButton24_Click(object sender, EventArgs e)
+        {
+            if(label2.Text != bunifuTextBox7.Text)
+            {
+                if (IsEmailExists(bunifuTextBox7.Text))
+                {
+                    MessageBox.Show("Bu mail zaten kullanılıyor lütfen başka bir mail giriniz");
+                    return;
+                }//eğer mail farklı ise kod aşağı doğru çalışmaya devam eder yani adam maili değişmicekse herşey olduğu gibi çalışmaya devam eder
+            }
+            String from, pass, messageBody;
+            Random rand = new Random();
+            randomCode = (rand.Next(999999)).ToString();
+            MailMessage message = new MailMessage();
+            to = (bunifuTextBox7.Text).ToString();
+            from = "nova.turhan@yandex.com";
+            pass = "kslhgcuifgohlzgp";
+            messageBody = "Doğrulama kodunuz: " + randomCode;
+            message.To.Add(to);
+            message.From = new MailAddress(from);
+            message.Body = messageBody;
+            message.Subject = "Password Reseting Code";
+            SmtpClient smtp = new SmtpClient("smtp.yandex.com");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.Credentials = new NetworkCredential(from, pass);
+
+            try
+            {
+                smtp.Send(message);
+                MessageBox.Show("Code Send Successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void bunifuButton25_Click(object sender, EventArgs e)
+        {
+            if (randomCode == (bunifuTextBox12.Text).ToString())
+            {
+                to = bunifuTextBox12.Text;
+                emailDogrulandimi = true;
+                bunifuButton21.Enabled = true;
+                MessageBox.Show("Code İs Correct");
+            }
+            else
+            {
+                MessageBox.Show("Wrong Code");
             }
         }
     }
