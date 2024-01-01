@@ -38,5 +38,10 @@ namespace Moria
         {
 
         }
+
+        private void bunifuPictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Moria
         {
             using (Graphics g = bunifuLabel1.CreateGraphics())
             {
-                SizeF size = g.MeasureString(bunifuLabel1.Text, bunifuLabel1.Font, 1000);
+                SizeF size = g.MeasureString(bunifuLabel1.Text, bunifuLabel1.Font, 10000);
                 return (int)Math.Ceiling(size.Height);
             }
         }

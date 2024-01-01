@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics.Eventing.Reader;
 using System.Net.Mail;
 using System.Net;
+using Bunifu.Framework.UI;
 
 namespace Moria
 {
@@ -29,7 +30,7 @@ namespace Moria
         public static String to;
         private bool emailDogrulandimi = false;
 
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -607,7 +608,7 @@ namespace Moria
                 }
             }
         }
-
+       
         private void bunifuButton7_Click(object sender, EventArgs e) // mesaj gönderme buttonu
         {
             SqlConnection con = new SqlConnection(constring);
@@ -683,6 +684,7 @@ namespace Moria
             UserControl1 control = (UserControl1)sender;
             bunifuLabel1.Text = control.Title;
             bunifuPictureBox8.Image = control.Icon;
+
             MessageChat();
         }
 
@@ -753,6 +755,16 @@ namespace Moria
             {
                 MessageBox.Show("Wrong Code");
             }
+        }
+
+        private void bunifuCircleProgress1_ProgressChanged(object sender, Bunifu.UI.WinForms.BunifuCircleProgress.ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void bunifuPictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
