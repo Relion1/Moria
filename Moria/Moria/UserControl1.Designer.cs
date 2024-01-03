@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserControl1));
             this.label1 = new System.Windows.Forms.Label();
             this.bunifuPictureBox1 = new Bunifu.UI.WinForms.BunifuPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.bunifuPictureBox1)).BeginInit();
@@ -44,6 +45,7 @@
             this.label1.Size = new System.Drawing.Size(184, 19);
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // bunifuPictureBox1
             // 
@@ -52,8 +54,9 @@
             this.bunifuPictureBox1.AutoSizeHeight = true;
             this.bunifuPictureBox1.BorderRadius = 20;
             this.bunifuPictureBox1.Enabled = false;
+            this.bunifuPictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("bunifuPictureBox1.Image")));
             this.bunifuPictureBox1.IsCircle = true;
-            this.bunifuPictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.bunifuPictureBox1.Location = new System.Drawing.Point(6, 3);
             this.bunifuPictureBox1.Name = "bunifuPictureBox1";
             this.bunifuPictureBox1.Size = new System.Drawing.Size(40, 40);
             this.bunifuPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -66,11 +69,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.BlueViolet;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bunifuPictureBox1);
             this.Name = "UserControl1";
-            this.Size = new System.Drawing.Size(236, 47);
+            this.Size = new System.Drawing.Size(242, 47);
             this.Load += new System.EventHandler(this.UserControl1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bunifuPictureBox1)).EndInit();
             this.ResumeLayout(false);

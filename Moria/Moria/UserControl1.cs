@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Moria
 {
-    public partial class UserControl1 : UserControl
+    public partial class UserControl1 : UserControl 
     {
         public UserControl1()
         {
@@ -36,10 +36,15 @@ namespace Moria
 
         private void UserControl1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void bunifuPictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

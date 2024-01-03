@@ -24,6 +24,7 @@ namespace Moria
         public Form2()
         {
             InitializeComponent();
+
         }
 
         String randomCode;
@@ -766,5 +767,80 @@ namespace Moria
         {
 
         }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private bool toggle=false;
+        private void bunifuButton8_Click(object sender, EventArgs e)
+        {
+
+          
+          
+
+
+        }
+
+        private void bunifuPictureBox11_Click(object sender, EventArgs e)
+        {
+            if (bunifuPanel6.Visible == false)
+            {
+                bunifuPanel6.Visible = true;
+            }
+            else
+            {
+                bunifuPanel6.Visible = false;
+            }
+        }
+
+        public void bunifuToggleSwitch1_CheckedChanged(object sender, Bunifu.UI.WinForms.BunifuToggleSwitch.CheckedChangedEventArgs e)
+        {
+            
+
+            if (toggle)
+            {
+                this.BackColor = Color.BlueViolet;
+
+                panel1.BackColor = Color.BlueViolet;
+                bunifuPanel2.BackgroundColor = Color.BlueViolet;
+                bunifuGradientPanel1.BackColor = Color.BlueViolet;
+                userControl11.BackColor = Color.BlueViolet;
+                userControl21.BackColor = Color.BlueViolet;
+                userControl31.BackColor = Color.BlueViolet;
+                
+                userControl11.Invalidate();
+                userControl21.Invalidate();
+                userControl31.Invalidate();
+                panel5.BackColor = Color.BlueViolet;
+                bunifuGradientPanel1.Visible = true;
+                bunifuLabel2.Text = ("Dark Mode");
+
+            }
+
+            else
+            {
+                this.BackColor = Color.Orange;
+                panel1.BackColor = Color.Orange;
+                bunifuPanel2.BackgroundColor = Color.Orange;
+                bunifuGradientPanel1.BackColor = Color.Orange;
+                userControl11.BackColor = Color.Orange;
+                userControl21.BackColor = Color.Orange;
+                userControl31.BackColor = Color.Orange;
+             
+                userControl11.Invalidate();
+                userControl21.Invalidate();
+                userControl31.Invalidate();
+                panel5.BackColor = Color.Orange;
+                bunifuGradientPanel1.Visible = false;
+                bunifuLabel2.Text = ("Light Mode");
+
+            }
+
+            // Anahtar değişkenini tersine çevir
+            toggle = !toggle;
+        }
+
+        
     }
 }
