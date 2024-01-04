@@ -17,6 +17,13 @@ namespace Moria
         {
             InitializeComponent();
         }
+
+
+
+        public int MessageId { get; set; }
+
+
+
         private string _title;
         public string Title
         {

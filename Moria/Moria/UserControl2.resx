@@ -146,6 +146,22 @@
         SUVORK5CYII=
 </value>
   </data>
+  <data name="bunifuButton2.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACIAAAAYCAYAAACfpi8JAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABVSURBVEhL7c4xCsAgEAVRb+bpcjxPIKkECwsJ2CxpItvJ
+        v8CmmOLBlJNs3PV9+hfJH5JHuXIof2DkxIhiRDGiGFGMKEYUI4oRxYj614jNtjwi2WxrAwr4tnkynl8k
+        AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="bunifuButton1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACoAAAAYCAYAAACMcW/9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABXSURBVFhH7c6xCYBAEADB78zqLM8KxOjBwOARPjlMlOth
+        gxM2GNhwW1zH/tznW1k+toxtXUrLR0dJjtIcpTlKc5TmKM1RmqM0R2mO0v41GqPPjMpi9PkBw3e2h7W2
+        CScAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="bunifuLabel1.BaseStylesheet" xml:space="preserve">
     <value>#bunifu-label { padding: 0px; margin: auto; padding-top: 12px;font-family: 'Microsoft Sans Serif'; font-size: 12pt; width: 100%; height: 100%; font-style: normal; font-weight: normal; text-decoration: none; color: rgb(0, 0, 0); text-align: left; }</value>
   </data>

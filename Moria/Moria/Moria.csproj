@@ -185,5 +185,17 @@
   <ItemGroup>
     <None Include="Resources\alt ok.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\airplanebeyaz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\questionbeyaz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\settingsbeyaz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\homebeyaz.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

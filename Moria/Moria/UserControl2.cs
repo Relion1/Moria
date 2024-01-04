@@ -16,6 +16,13 @@ namespace Moria
         {
             InitializeComponent();
         }
+
+
+        public int MessageId { get; set; }
+
+
+
+
         private string _title;
         public string Title
         {
@@ -32,5 +39,29 @@ namespace Moria
         {
             AddHeighttext();
         }
+
+        private void MessageSettingsButton_Click(object sender, EventArgs e) 
+        {
+            if (MessageSettingsPanel.Visible == false)
+            {
+                MessageSettingsPanel.Visible = true;
+            }
+            else
+            {
+                MessageSettingsPanel.Visible = false;
+            }
+        }
+
+        private void bunifuButton2_Click(object sender, EventArgs e)
+        {
+            ((Form2)this.ParentForm).OpenEditMessage(this);
+        }
+
+        private void bunifuButton1_Click(object sender, EventArgs e)
+        {
+            ((Form2)this.ParentForm).MesajiArayuzdenSil(this);
+        }
+
+
     }
 }

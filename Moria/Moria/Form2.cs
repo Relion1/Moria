@@ -15,6 +15,8 @@ using System.Diagnostics.Eventing.Reader;
 using System.Net.Mail;
 using System.Net;
 using Bunifu.Framework.UI;
+using Bunifu.UI.WinForms.BunifuButton;
+using Bunifu.UI.WinForms;
 
 namespace Moria
 {
@@ -31,7 +33,7 @@ namespace Moria
         public static String to;
         private bool emailDogrulandimi = false;
 
-        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -226,7 +228,7 @@ namespace Moria
             cmd.ExecuteNonQuery();
 
             con.Close();
-            MessageBox.Show("Profile is updated, please restart the app for the change");
+            MessageBox.Show("Profil güncellendi, değişiklik için lütfen uygulamayı yeniden başlatın");
             label13.Text = bunifuTextBox5.Text; //yeni kullanıcı ismini ekrana yazdırsın diye 
             LoadFormData();
         }
@@ -235,7 +237,7 @@ namespace Moria
         {
             if (!emailDogrulandimi)
             {
-                MessageBox.Show("Önce e postanı doğrulaman gerekir");
+                MessageBox.Show("Önce e-postanı doğrulaman gerekir");
                 return;
             }
 
@@ -282,7 +284,7 @@ namespace Moria
             }
             else
             {
-                errorProvider1.SetError(this.bunifuTextBox7, "Please provide vaild Mail address");
+                errorProvider1.SetError(this.bunifuTextBox7, "Lütfen geçerli bir e-posta adresi belirtin");
                 return;
             }
 
@@ -295,7 +297,7 @@ namespace Moria
                 }
                 else
                 {
-                    MessageBox.Show("Bu email zaten kullanılıyor lütfen farklı bir mail deneyiniz");
+                    MessageBox.Show("Bu e-posta zaten kullanılıyor lütfen farklı bir e-posta deneyiniz");
                 }
             }
             else
@@ -463,7 +465,7 @@ namespace Moria
         {
             var input = bunifuTextBox9.Text;
 
-            if (string.IsNullOrWhiteSpace(input)) //boş geçemessin uyarısı şunun için bunifutextbox9=confirmpassword
+            if (string.IsNullOrWhiteSpace(input)) //boş geçemessin uyarısı şunun için bunifutextbox9=password
             {
                 errorProvider1.SetError(bunifuTextBox9, "Sifre bos olmamalidir");
                 return;
@@ -505,7 +507,7 @@ namespace Moria
             {
                 SqlConnection con = new SqlConnection(constring);
                 con.Open();
-                SqlCommand cmd = new SqlCommand("UPDATE Login SET password ='" + bunifuTextBox9.Text + "',confirmpassword = '" + bunifuTextBox10.Text + "'where email = '" + label2.Text + "'and password = '" + bunifuTextBox8.Text + "'", con);
+                SqlCommand cmd = new SqlCommand("UPDATE Login SET password ='" + bunifuTextBox9.Text + "'where email = '" + label2.Text + "'and password = '" + bunifuTextBox8.Text + "'", con);
 
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -612,9 +614,17 @@ namespace Moria
        
         private void bunifuButton7_Click(object sender, EventArgs e) // mesaj gönderme buttonu
         {
+
+
+            if (string.IsNullOrEmpty(bunifuTextBox11.Text))
+            {
+                MessageBox.Show("Boş mesaj gönderemezsiniz!"); 
+                return;
+            }
+
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string q = "insert into Chat(userone,usertwo,message)values(@userone,@usertwo,@message)";
+            string q = "insert into Chat(userone,usertwo,message,time_1)values(@userone,@usertwo,@message,GETDATE())";
             SqlCommand cmd = new SqlCommand(q, con);
             cmd.Parameters.AddWithValue("@userone",bunifuTextBox1.Text);
             cmd.Parameters.AddWithValue("@usertwo",bunifuLabel1.Text);
@@ -628,7 +638,8 @@ namespace Moria
         private void MessageChat()
         {
             SqlDataAdapter adapter;
-            adapter = new SqlDataAdapter("SELECT * FROM Chat WHERE (userone = @user1 AND usertwo = @user2) OR (userone = @user2 AND usertwo = @user1)", constring);
+            // select * from chatte sonda order by time 1 e göre sıralaması lazım mesajları ama sıralama bozuluyor anlamadım.
+            adapter = new SqlDataAdapter("SELECT * FROM Chat WHERE (userone = @user1 AND usertwo = @user2) OR (userone = @user2 AND usertwo = @user1) ORDER BY time_1", constring); 
             adapter.SelectCommand.Parameters.AddWithValue("@user1", bunifuLabel1.Text);
             adapter.SelectCommand.Parameters.AddWithValue("@user2", bunifuTextBox1.Text);
             DataTable table = new DataTable();
@@ -644,13 +655,16 @@ namespace Moria
 
                 foreach (DataRow row in table.Rows)
                 {
+
+                    int messageId = Convert.ToInt32(row["message_id"]);
+
                     if (bunifuTextBox1.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
                     {
                         userControls2s[userControl2Index] = new UserControl2();
                         //userControls2s[userControl2Index].Dock = DockStyle.Top; tasarımda var
                         //userControls2s[userControl2Index].BringToFront();       tasarımda var
                         userControls2s[userControl2Index].Title = row["message"].ToString();
-
+                        userControls2s[userControl2Index].MessageId = messageId;
                         flowLayoutPanel2.Controls.Add(userControls2s[userControl2Index]);
                         flowLayoutPanel2.ScrollControlIntoView(userControls2s[userControl2Index]);
 
@@ -663,7 +677,7 @@ namespace Moria
                         //userControls3s[userControl3Index].BringToFront();       tasarımda var
                         userControls3s[userControl3Index].Title = row["message"].ToString();
                         userControls3s[userControl3Index].Icon = bunifuPictureBox8.Image;
-
+                        userControls3s[userControl3Index].MessageId = messageId;
                         flowLayoutPanel2.Controls.Add(userControls3s[userControl3Index]);
                         flowLayoutPanel2.ScrollControlIntoView(userControls3s[userControl3Index]);
 
@@ -710,7 +724,7 @@ namespace Moria
             {
                 if (IsEmailExists(bunifuTextBox7.Text))
                 {
-                    MessageBox.Show("Bu mail zaten kullanılıyor lütfen başka bir mail giriniz");
+                    MessageBox.Show("Bu e-posta zaten kullanılıyor lütfen başka bir e-posta giriniz");
                     return;
                 }//eğer mail farklı ise kod aşağı doğru çalışmaya devam eder yani adam maili değişmicekse herşey olduğu gibi çalışmaya devam eder
             }
@@ -750,11 +764,11 @@ namespace Moria
                 to = bunifuTextBox12.Text;
                 emailDogrulandimi = true;
                 bunifuButton21.Enabled = true;
-                MessageBox.Show("Code İs Correct");
+                MessageBox.Show("Kod Doğru");
             }
             else
             {
-                MessageBox.Show("Wrong Code");
+                MessageBox.Show("Yanlış Kod!");
             }
         }
 
@@ -775,10 +789,6 @@ namespace Moria
         private bool toggle=false;
         private void bunifuButton8_Click(object sender, EventArgs e)
         {
-
-          
-          
-
 
         }
 
@@ -839,6 +849,101 @@ namespace Moria
 
             // Anahtar değişkenini tersine çevir
             toggle = !toggle;
+        }
+
+        public void MesajiArayuzdenSil(UserControl2 userControl2)
+        {
+            DialogResult result = MessageBox.Show("Bu mesajı silmek istediğinizden emin misiniz?", "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                this.flowLayoutPanel2.Controls.Remove(userControl2);
+                SilinenMesajiVeritabanindanKaldır(userControl2.Title, userControl2.MessageId);
+            }
+        }
+
+
+        private void SilinenMesajiVeritabanindanKaldır(string deletedMessage, int MessageId)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(constring)) // using yaptığımız için oto kapanacak işlemden sonra sql
+                {
+                    con.Open();
+
+                    string query = "DELETE FROM Chat WHERE userone = @sender AND usertwo = @receiver AND message = @deletedMessage AND message_id = @MessageId";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@sender", bunifuTextBox1.Text);
+                    cmd.Parameters.AddWithValue("@receiver", bunifuLabel1.Text);
+                    cmd.Parameters.AddWithValue("@deletedMessage", deletedMessage);
+                    cmd.Parameters.AddWithValue("@MessageId", MessageId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Mesaj silinirken bir hata oluştu: " + ex.Message);
+            }
+        }
+
+        public string UserControl2İsim; // değiştirmeden önceki mesajı burada tutuyorum. 
+        public void OpenEditMessage(UserControl2 userControl2) // mesaj düzenleme
+        {
+            if (MessageEditPanel.Visible == false)
+            {
+                MessageEditPanel.Visible = true;
+
+                //bunifuTextBox13.PlaceholderText = userControl2.Title;
+                UserControl2İsim = userControl2.Title; // Bu kısımda değiştirilecek mesajı alıyoruz
+                EditTextBox.Text = userControl2.Title;
+                int messageId = userControl2.MessageId;
+                SendEditButton.Tag = messageId;
+            }
+            else
+            {
+                MessageEditPanel.Visible = false;
+            }
+
+        }
+
+        public void SendEditButton_Click(object sender, EventArgs e) // edit gönder button
+        {
+            if (MessageEditPanel.Visible == true)
+            {
+
+                if (string.IsNullOrEmpty(EditTextBox.Text))
+                {
+                    MessageBox.Show("Boş mesaj gönderemezsiniz!");
+                    return;
+                }
+
+                using (SqlConnection con = new SqlConnection(constring))
+                {
+                    con.Open();
+
+                    string query = "UPDATE Chat SET message = @editedmessage WHERE userone = @sender AND usertwo = @receiver AND message = @message AND message_id = @MessageId";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@editedmessage", EditTextBox.Text); // degistirilen mesaj
+                    cmd.Parameters.AddWithValue("@sender", bunifuTextBox1.Text); // Gönderenin adı
+                    cmd.Parameters.AddWithValue("@receiver", bunifuLabel1.Text); // Alıcının adı
+                    cmd.Parameters.AddWithValue("@message", UserControl2İsim); // orjinal mesaj
+                    cmd.Parameters.AddWithValue("@MessageId", SendEditButton.Tag); // mesajın satırındaki mesaj_id değeri
+
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageEditPanel.Visible = false;
+                UserControl2İsim = string.Empty;
+            }
+
+        }
+
+
+        private void bunifuPictureBox9_Click(object sender, EventArgs e)
+        {
+
         }
 
         

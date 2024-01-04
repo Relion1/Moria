@@ -30,7 +30,7 @@ namespace Moria
         Color btn = Color.SpringGreen;
         Color btr = Color.FromArgb(137, 140, 142);
         Color bb = Color.DarkSlateGray;
-        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form1_Load(object sender, EventArgs e)
         {
             BtnLogin.PerformClick();
@@ -68,11 +68,11 @@ namespace Moria
 
         private void bunifuButton4_Click(object sender, EventArgs e) //kayıt olma buttonu
         {
-            
+           
            
             if (bunifuPictureBox1.Image == null)
             {
-                MessageBox.Show("İf you want you can select a photo for your profile");
+                MessageBox.Show("Eğer isterseniz profilinize bir fotoğraf seçebilirsiniz");
 
             }
             else 
@@ -143,7 +143,7 @@ namespace Moria
 
                 if (IsEmailExists(bunifuTextBox5.Text))
                 {
-                    MessageBox.Show("bu mail kullanılıyor.");
+                    MessageBox.Show("bu e-posta kullanılıyor.");
                     return;
                 }
                 string validEmail = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
@@ -153,7 +153,13 @@ namespace Moria
                 }
                 else
                 {
-                    errorProvider1.SetError(this.bunifuTextBox5, "Please provide vaild Mail address");
+                    errorProvider1.SetError(this.bunifuTextBox5, "Lütfen geçerli bir e-posta adresi belirtin");
+                    return;
+                }
+
+                if (bunifuTextBox5.Text != mailtutucu)
+                {
+                    MessageBox.Show("Lütfen e-postanızı değiştirmeyin!");
                     return;
                 }
 
@@ -184,12 +190,12 @@ namespace Moria
                 }
                 if(bunifuTextBox6.Text != bunifuTextBox7.Text)
                 {
-                    MessageBox.Show("Password not equal");
+                    MessageBox.Show("Şifreler Eşit Değil!");
                 }
                 else
                 {
                     SqlConnection con = new SqlConnection(constring);
-                    string query = "insert into Login(firstname,lastname,email,password,confirmpassword,image)values(@firstname,@lastname,@email,@password,@confirmpassword,@image)";
+                    string query = "insert into Login(firstname,lastname,email,password,image)values(@firstname,@lastname,@email,@password,@image)";
                     SqlCommand cmd = new SqlCommand(query, con);
                     MemoryStream me = new MemoryStream();
                     bunifuPictureBox1.Image.Save(me, bunifuPictureBox1.Image.RawFormat);
@@ -197,12 +203,11 @@ namespace Moria
                     cmd.Parameters.AddWithValue("lastname", bunifuTextBox3.Text);
                     cmd.Parameters.AddWithValue("email", bunifuTextBox5.Text);
                     cmd.Parameters.AddWithValue("password", sifre);
-                    cmd.Parameters.AddWithValue("confirmpassword", bunifuTextBox7.Text);
                     cmd.Parameters.AddWithValue("image", me.ToArray());
                     con.Open();
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    MessageBox.Show("Registeration successfully complated");
+                    MessageBox.Show("Kayıt olma işlemi başarıyla tamamlandı");
                     bunifuTextBox4.Clear();
                     bunifuTextBox3.Clear();
                     bunifuTextBox5.Clear();
@@ -226,7 +231,7 @@ namespace Moria
         {
             if (string.IsNullOrEmpty(bunifuTextBox1.Text.Trim()))
             {
-                errorProvider1.SetError(bunifuTextBox1, "email giriniz");
+                errorProvider1.SetError(bunifuTextBox1, "E-posta giriniz");
                 return;
             }
             else
@@ -256,7 +261,7 @@ namespace Moria
             }
             else
             {
-                MessageBox.Show("Email ve şifrenizi kontrol ediniz");
+                MessageBox.Show("E-posta ve şifrenizi kontrol ediniz");
             }
             con.Close();
         }
@@ -277,8 +282,24 @@ namespace Moria
             }
         }
 
+        string mailtutucu;  // kod gönder dediğinde mail benzersiz ise mailtutucu ile kaydediyoruz ki
+                            // daha sonra registertionda maili değiştiremesin diye.
+
         private void kodDogrulaBtn_Click(object sender, EventArgs e)
         {
+            
+
+            if (IsEmailExists(bunifuTextBox5.Text))
+            {
+                MessageBox.Show("Bu e-posta kullanılıyor");
+                return;
+            }
+            else
+            {
+                mailtutucu = bunifuTextBox5.Text;
+            }
+
+
             String from, pass, messageBody;
             Random rand = new Random();
             randomCode = (rand.Next(999999)).ToString();
@@ -300,7 +321,7 @@ namespace Moria
             try
             {
                 smtp.Send(message);
-                MessageBox.Show("Code Send Successfully");
+                MessageBox.Show("Kod başarıyla e-postanıza gönderildi");
             }
             catch (Exception ex)
             {
@@ -315,11 +336,11 @@ namespace Moria
                 to = emailDogruGirisi.Text;
                 emailDogrulandimi = true;
                 bunifuButton4.Enabled = true;
-                MessageBox.Show("Code İs Correct");
+                MessageBox.Show("Kod Doğru");
             }
             else
             {
-                MessageBox.Show("Wrong Code");
+                MessageBox.Show("Yanlış Kod!");
             }
         }
 
@@ -355,6 +376,11 @@ namespace Moria
         }
 
         private void bunifuCircleProgress1_ProgressChanged(object sender, Bunifu.UI.WinForms.BunifuCircleProgress.ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void bunifuTextBox7_TextChanged(object sender, EventArgs e)
         {
 
         }

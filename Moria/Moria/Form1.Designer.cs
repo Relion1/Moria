@@ -845,6 +845,7 @@
             this.bunifuTextBox7.TextPlaceholder = "Confirm";
             this.bunifuTextBox7.UseSystemPasswordChar = false;
             this.bunifuTextBox7.WordWrap = true;
+            this.bunifuTextBox7.TextChanged += new System.EventHandler(this.bunifuTextBox7_TextChanged);
             // 
             // bunifuTextBox6
             // 
