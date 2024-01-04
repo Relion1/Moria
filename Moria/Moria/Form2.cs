@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
@@ -33,7 +34,7 @@ namespace Moria
         public static String to;
         private bool emailDogrulandimi = false;
 
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -611,11 +612,23 @@ namespace Moria
                 }
             }
         }
-       
+
+        static string Encode(string message)
+        {
+            // Mesajı UTF-8 encoding ile şifrele
+            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+            return Convert.ToBase64String(messageBytes);
+        }
+
+        static string Decode(string encodedMessage)
+        {
+            // Şifreli mesajı UTF-8 encoding ile çöz
+            byte[] encodedBytes = Convert.FromBase64String(encodedMessage);
+            return Encoding.UTF8.GetString(encodedBytes);
+        }
+
         private void bunifuButton7_Click(object sender, EventArgs e) // mesaj gönderme buttonu
         {
-
-
             if (string.IsNullOrEmpty(bunifuTextBox11.Text))
             {
                 MessageBox.Show("Boş mesaj gönderemezsiniz!"); 
@@ -624,11 +637,12 @@ namespace Moria
 
             SqlConnection con = new SqlConnection(constring);
             con.Open();
-            string q = "insert into Chat(userone,usertwo,message,time_1)values(@userone,@usertwo,@message,GETDATE())";
+            string encryptedMessage = Encode(bunifuTextBox11.Text);
+            string q = "insert into Chat(userone,usertwo,message)values(@userone,@usertwo,@message)";
             SqlCommand cmd = new SqlCommand(q, con);
-            cmd.Parameters.AddWithValue("@userone",bunifuTextBox1.Text);
-            cmd.Parameters.AddWithValue("@usertwo",bunifuLabel1.Text);
-            cmd.Parameters.AddWithValue("@message",bunifuTextBox11.Text);
+            cmd.Parameters.AddWithValue("@userone", bunifuTextBox1.Text);
+            cmd.Parameters.AddWithValue("@usertwo", bunifuLabel1.Text);
+            cmd.Parameters.AddWithValue("@message", encryptedMessage);
             cmd.ExecuteNonQuery();
             con.Close();
             MessageChat();
@@ -663,7 +677,7 @@ namespace Moria
                         userControls2s[userControl2Index] = new UserControl2();
                         //userControls2s[userControl2Index].Dock = DockStyle.Top; tasarımda var
                         //userControls2s[userControl2Index].BringToFront();       tasarımda var
-                        userControls2s[userControl2Index].Title = row["message"].ToString();
+                        userControls2s[userControl2Index].Title = Decode(row["message"].ToString());
                         userControls2s[userControl2Index].MessageId = messageId;
                         flowLayoutPanel2.Controls.Add(userControls2s[userControl2Index]);
                         flowLayoutPanel2.ScrollControlIntoView(userControls2s[userControl2Index]);
@@ -675,11 +689,20 @@ namespace Moria
                         userControls3s[userControl3Index] = new UserControl3();
                         //userControls3s[userControl3Index].Dock = DockStyle.Top; tasarımda var
                         //userControls3s[userControl3Index].BringToFront();       tasarımda var
-                        userControls3s[userControl3Index].Title = row["message"].ToString();
+                        userControls3s[userControl3Index].Title = Decode(row["message"].ToString());
                         userControls3s[userControl3Index].Icon = bunifuPictureBox8.Image;
                         userControls3s[userControl3Index].MessageId = messageId;
                         flowLayoutPanel2.Controls.Add(userControls3s[userControl3Index]);
                         flowLayoutPanel2.ScrollControlIntoView(userControls3s[userControl3Index]);
+
+                        // Check if the message has already been notified
+                        bool isNotified = CheckIfNotified(row["message"].ToString());
+
+                        if (!isNotified)
+                        {
+                            SendNotification("Yeni bir mesajın var", row["message"].ToString());
+                            MarkAsNotified(row["message"].ToString());
+                        }
 
                         userControl3Index++;
                     }
@@ -687,6 +710,52 @@ namespace Moria
             }
         }
 
+
+        private bool CheckIfNotified(string message)
+        {
+            // Check if the message has already been notified in the database
+            using (SqlConnection connection = new SqlConnection(constring))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Notifications WHERE Message = @message AND IsNotified = 1", connection))
+                {
+                    command.Parameters.AddWithValue("@message", message);
+                    int count = (int)command.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
+
+        private void MarkAsNotified(string message)
+        {
+            // Mark the message as notified in the database
+            using (SqlConnection connection = new SqlConnection(constring))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("INSERT INTO Notifications (Message, IsNotified) VALUES (@message, 1)", connection))
+                {
+                    command.Parameters.AddWithValue("@message", message);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void SendNotification(string title, string message)
+        {
+            if(Application.OpenForms.Count > 0 && Application.OpenForms[0].Visible)
+            {
+                System.Windows.Forms.NotifyIcon notification = new System.Windows.Forms.NotifyIcon();
+                notification.Visible = true;
+                notification.Icon = System.Drawing.SystemIcons.Asterisk;
+                notification.BalloonTipTitle = title;
+                notification.BalloonTipText = Decode(message); //veri tabanındaki şifreli mesajı bildirimde gösterebilmek için
+                notification.ShowBalloonTip(2000); // 2000 milliseconds (2 seconds)
+            }
+            else
+            {
+                SystemSounds.Exclamation.Play();
+            }
+        }
 
         private void userControl11_Load(object sender, EventArgs e)
         {
@@ -733,14 +802,14 @@ namespace Moria
             randomCode = (rand.Next(999999)).ToString();
             MailMessage message = new MailMessage();
             to = (bunifuTextBox7.Text).ToString();
-            from = "nova.turhan@yandex.com";
-            pass = "kslhgcuifgohlzgp";
+            from = "ramazanmoria@gmail.com";
+            pass = "druvpbdebtmaxkdz";
             messageBody = "Doğrulama kodunuz: " + randomCode;
             message.To.Add(to);
             message.From = new MailAddress(from);
             message.Body = messageBody;
             message.Subject = "Password Reseting Code";
-            SmtpClient smtp = new SmtpClient("smtp.yandex.com");
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
             smtp.EnableSsl = true;
             smtp.Port = 587;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -858,7 +927,7 @@ namespace Moria
             if (result == DialogResult.Yes)
             {
                 this.flowLayoutPanel2.Controls.Remove(userControl2);
-                SilinenMesajiVeritabanindanKaldır(userControl2.Title, userControl2.MessageId);
+                SilinenMesajiVeritabanindanKaldır(Encode(userControl2.Title), userControl2.MessageId);//encode olmalı yoksa bug olur sonuçta ekran da yazanla veri tabanındaki eşit dil
             }
         }
 
@@ -895,10 +964,11 @@ namespace Moria
                 MessageEditPanel.Visible = true;
 
                 //bunifuTextBox13.PlaceholderText = userControl2.Title;
-                UserControl2İsim = userControl2.Title; // Bu kısımda değiştirilecek mesajı alıyoruz
+                UserControl2İsim = Encode(userControl2.Title); // Bu kısımda değiştirilecek mesajı alıyoruz
                 EditTextBox.Text = userControl2.Title;
                 int messageId = userControl2.MessageId;
                 SendEditButton.Tag = messageId;
+                MessageChat();
             }
             else
             {
@@ -924,7 +994,7 @@ namespace Moria
 
                     string query = "UPDATE Chat SET message = @editedmessage WHERE userone = @sender AND usertwo = @receiver AND message = @message AND message_id = @MessageId";
                     SqlCommand cmd = new SqlCommand(query, con);
-                    cmd.Parameters.AddWithValue("@editedmessage", EditTextBox.Text); // degistirilen mesaj
+                    cmd.Parameters.AddWithValue("@editedmessage", Encode(EditTextBox.Text)); // degistirilen mesaj
                     cmd.Parameters.AddWithValue("@sender", bunifuTextBox1.Text); // Gönderenin adı
                     cmd.Parameters.AddWithValue("@receiver", bunifuLabel1.Text); // Alıcının adı
                     cmd.Parameters.AddWithValue("@message", UserControl2İsim); // orjinal mesaj
@@ -944,8 +1014,6 @@ namespace Moria
         private void bunifuPictureBox9_Click(object sender, EventArgs e)
         {
 
-        }
-
-        
+        } 
     }
 }

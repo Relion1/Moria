@@ -30,7 +30,7 @@ namespace Moria
         Color btn = Color.SpringGreen;
         Color btr = Color.FromArgb(137, 140, 142);
         Color bb = Color.DarkSlateGray;
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form1_Load(object sender, EventArgs e)
         {
             BtnLogin.PerformClick();
@@ -65,10 +65,22 @@ namespace Moria
             }
         }
 
+        static string Encode(string message)
+        {
+            // Mesajı UTF-8 encoding ile şifrele
+            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+            return Convert.ToBase64String(messageBytes);
+        }
+
+        static string Decode(string encodedMessage)
+        {
+            // Şifreli mesajı UTF-8 encoding ile çöz
+            byte[] encodedBytes = Convert.FromBase64String(encodedMessage);
+            return Encoding.UTF8.GetString(encodedBytes);
+        }
 
         private void bunifuButton4_Click(object sender, EventArgs e) //kayıt olma buttonu
         {
-           
            
             if (bunifuPictureBox1.Image == null)
             {
@@ -202,6 +214,7 @@ namespace Moria
                     cmd.Parameters.AddWithValue("firstname", bunifuTextBox4.Text);
                     cmd.Parameters.AddWithValue("lastname", bunifuTextBox3.Text);
                     cmd.Parameters.AddWithValue("email", bunifuTextBox5.Text);
+                    sifre = Encode(sifre);//şifreyi şifrelemek
                     cmd.Parameters.AddWithValue("password", sifre);
                     cmd.Parameters.AddWithValue("image", me.ToArray());
                     con.Open();
@@ -250,7 +263,7 @@ namespace Moria
             }
             SqlConnection con= new SqlConnection(constring);
             con.Open();
-            string q = "SELECT * FROM Login WHERE email = '" + bunifuTextBox1.Text + "'AND password='" + bunifuTextBox2.Text + "'";
+            string q = "SELECT * FROM Login WHERE email = '" + bunifuTextBox1.Text + "'AND password='" + Encode(bunifuTextBox2.Text) + "'";
             SqlCommand cmd = new SqlCommand(q,con);
             SqlDataReader dataReader;
             dataReader = cmd.ExecuteReader();
@@ -305,14 +318,14 @@ namespace Moria
             randomCode = (rand.Next(999999)).ToString();
             MailMessage message = new MailMessage();
             to = (bunifuTextBox5.Text).ToString();
-            from = "nova.turhan@yandex.com";
-            pass = "kslhgcuifgohlzgp";
+            from = "ramazanmoria@gmail.com";
+            pass = "druvpbdebtmaxkdz";
             messageBody = "Doğrulama kodunuz: " + randomCode;
             message.To.Add(to);
             message.From = new MailAddress(from);
             message.Body = messageBody;
             message.Subject = "Password Reseting Code";
-            SmtpClient smtp = new SmtpClient("smtp.yandex.com");
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
             smtp.EnableSsl = true;
             smtp.Port = 587;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
