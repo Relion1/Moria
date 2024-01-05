@@ -742,7 +742,7 @@ namespace Moria
 
         private void SendNotification(string title, string message)
         {
-            if(Application.OpenForms.Count > 0 && Application.OpenForms[0].Visible)
+            if(!(Application.OpenForms.Count > 0 && Application.OpenForms[0].Visible))//form ekran da değil ise bu kod çalışcak ve bildirim gidicek ekran da ise sadece ses çalcak
             {
                 System.Windows.Forms.NotifyIcon notification = new System.Windows.Forms.NotifyIcon();
                 notification.Visible = true;
