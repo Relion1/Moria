@@ -264,7 +264,6 @@ namespace Moria
             SqlConnection con= new SqlConnection(constring);
             con.Open();
             string q = "SELECT * FROM Login WHERE email = '" + bunifuTextBox1.Text + "'AND password='" + Encode(bunifuTextBox2.Text) + "'";
-            MessageBox.Show(Encode(bunifuTextBox2.Text));
             SqlCommand cmd = new SqlCommand(q,con);
             SqlDataReader dataReader;
             dataReader = cmd.ExecuteReader();
