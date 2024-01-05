@@ -789,6 +789,7 @@ namespace Moria
 
         private void bunifuButton24_Click(object sender, EventArgs e)
         {
+            bunifuTextBox7.Enabled = false;
             if(label2.Text != bunifuTextBox7.Text)
             {
                 if (IsEmailExists(bunifuTextBox7.Text))
@@ -839,6 +840,7 @@ namespace Moria
             {
                 MessageBox.Show("Yanlış Kod!");
             }
+            bunifuTextBox7.Enabled = true;
         }
 
         private void bunifuCircleProgress1_ProgressChanged(object sender, Bunifu.UI.WinForms.BunifuCircleProgress.ProgressChangedEventArgs e)

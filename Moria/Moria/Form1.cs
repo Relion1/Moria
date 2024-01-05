@@ -300,7 +300,7 @@ namespace Moria
 
         private void kodDogrulaBtn_Click(object sender, EventArgs e)
         {
-            
+            bunifuTextBox5.Enabled = false;
 
             if (IsEmailExists(bunifuTextBox5.Text))
             {
@@ -355,6 +355,7 @@ namespace Moria
             {
                 MessageBox.Show("Yanlış Kod!");
             }
+            bunifuTextBox5.Enabled = true;
         }
 
         private void bunifuTextBox4_TextChanged(object sender, EventArgs e)
