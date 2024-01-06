@@ -197,5 +197,26 @@
   <ItemGroup>
     <None Include="Resources\homebeyaz.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EmojiAçma.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dosya-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map-symbol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dosya.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dosya1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Dosyagri.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Konum.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

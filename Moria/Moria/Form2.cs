@@ -34,7 +34,7 @@ namespace Moria
         public static String to;
         private bool emailDogrulandimi = false;
 
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
         private void Form2_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -653,7 +653,7 @@ namespace Moria
         {
             SqlDataAdapter adapter;
             // select * from chatte sonda order by time 1 e göre sıralaması lazım mesajları ama sıralama bozuluyor anlamadım.
-            adapter = new SqlDataAdapter("SELECT * FROM Chat WHERE (userone = @user1 AND usertwo = @user2) OR (userone = @user2 AND usertwo = @user1) ORDER BY time_1", constring); 
+            adapter = new SqlDataAdapter("SELECT * FROM Chat WHERE (userone = @user1 AND usertwo = @user2) OR (userone = @user2 AND usertwo = @user1)", constring); 
             adapter.SelectCommand.Parameters.AddWithValue("@user1", bunifuLabel1.Text);
             adapter.SelectCommand.Parameters.AddWithValue("@user2", bunifuTextBox1.Text);
             DataTable table = new DataTable();
@@ -1012,10 +1012,80 @@ namespace Moria
 
         }
 
-
-        private void bunifuPictureBox9_Click(object sender, EventArgs e)
+        private void bunifuIconButton4_Click(object sender, EventArgs e) // mesaj üç nokta buttonu
         {
+            if (bunifuGradientPanel2.Visible == false)
+            {
+                bunifuGradientPanel2.Visible = true;
+                bunifuGradientPanel2.BringToFront();
+            }
+            else
+            {
+                bunifuGradientPanel2.Visible = false;
+                bunifuPanel7.Visible = false;
+            }
+        }
 
-        } 
+        private void bunifuIconButton1_Click(object sender, EventArgs e) // emoji buttonu
+        {
+            if (bunifuPanel7.Visible == false)
+            {
+                bunifuPanel7.Visible = true;
+                bunifuPanel7.BringToFront();
+            }
+            else
+            {
+                bunifuPanel7.Visible = false;
+            }
+        }
+
+
+        private void EmojiButtonClick(string emojiText)
+        {
+            if (MessageEditPanel.Visible == false)
+            {
+                bunifuTextBox11.Text += emojiText;
+            }
+            else
+            {
+                EditTextBox.Text += emojiText;
+            }
+        }
+        private void bunifuButton3_Click(object sender, EventArgs e) // gülme 1 emoji
+        {
+            EmojiButtonClick(" &#x1F604 ");
+        }
+        private void bunifuButton8_Click_1(object sender, EventArgs e) // gülme 2 emoji
+        {
+            EmojiButtonClick(" &#x1F606 ");
+        }
+        private void bunifuButton9_Click(object sender, EventArgs e) // gülme 3 emoji
+        {
+            EmojiButtonClick(" &#x1F923 ");
+        }
+        private void bunifuButton10_Click(object sender, EventArgs e) // düz surat emoji
+        {
+            EmojiButtonClick(" &#x1F610 ");
+        }
+        private void bunifuButton11_Click(object sender, EventArgs e) // dil çıkarma emoji
+        {
+            EmojiButtonClick(" &#x1F61B ");
+        }
+        private void bunifuButton12_Click(object sender, EventArgs e) // havalı emoji
+        {
+            EmojiButtonClick(" &#x1F60E ");
+        }
+        private void bunifuButton13_Click(object sender, EventArgs e) // üzgün emoji
+        {
+            EmojiButtonClick(" &#x1F622 ");
+        }
+        private void bunifuButton14_Click(object sender, EventArgs e) // sinirli emoji
+        {
+            EmojiButtonClick(" &#x1F621 ");
+        }
+        private void bunifuButton15_Click(object sender, EventArgs e) // sevgi emoji
+        {
+            EmojiButtonClick(" &#x1F60D ");
+        }
     }
 }
