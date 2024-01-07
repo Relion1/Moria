@@ -56,18 +56,20 @@
             this.bunifuGradientPanel1.GradientTopLeft = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.bunifuGradientPanel1.GradientTopRight = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(61)))), ((int)(((byte)(87)))));
             this.bunifuGradientPanel1.Location = new System.Drawing.Point(0, 0);
+            this.bunifuGradientPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuGradientPanel1.Name = "bunifuGradientPanel1";
             this.bunifuGradientPanel1.Quality = 10;
-            this.bunifuGradientPanel1.Size = new System.Drawing.Size(220, 44);
+            this.bunifuGradientPanel1.Size = new System.Drawing.Size(293, 54);
             this.bunifuGradientPanel1.TabIndex = 1;
             // 
             // MessageSettingsPanel
             // 
             this.MessageSettingsPanel.Controls.Add(this.bunifuButton2);
             this.MessageSettingsPanel.Controls.Add(this.bunifuButton1);
-            this.MessageSettingsPanel.Location = new System.Drawing.Point(108, 18);
+            this.MessageSettingsPanel.Location = new System.Drawing.Point(144, 22);
+            this.MessageSettingsPanel.Margin = new System.Windows.Forms.Padding(4);
             this.MessageSettingsPanel.Name = "MessageSettingsPanel";
-            this.MessageSettingsPanel.Size = new System.Drawing.Size(109, 24);
+            this.MessageSettingsPanel.Size = new System.Drawing.Size(145, 30);
             this.MessageSettingsPanel.TabIndex = 2;
             this.MessageSettingsPanel.Visible = false;
             // 
@@ -120,7 +122,8 @@
             this.bunifuButton2.IdleIconLeftImage = null;
             this.bunifuButton2.IdleIconRightImage = null;
             this.bunifuButton2.IndicateFocus = false;
-            this.bunifuButton2.Location = new System.Drawing.Point(24, 0);
+            this.bunifuButton2.Location = new System.Drawing.Point(32, 0);
+            this.bunifuButton2.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuButton2.Name = "bunifuButton2";
             this.bunifuButton2.OnDisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(191)))), ((int)(((byte)(191)))));
             this.bunifuButton2.OnDisabledState.BorderRadius = 1;
@@ -154,7 +157,7 @@
             this.bunifuButton2.OnPressedState.ForeColor = System.Drawing.Color.White;
             this.bunifuButton2.OnPressedState.IconLeftImage = null;
             this.bunifuButton2.OnPressedState.IconRightImage = null;
-            this.bunifuButton2.Size = new System.Drawing.Size(34, 24);
+            this.bunifuButton2.Size = new System.Drawing.Size(45, 30);
             this.bunifuButton2.TabIndex = 1;
             this.bunifuButton2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.bunifuButton2.TextAlignment = System.Windows.Forms.HorizontalAlignment.Center;
@@ -212,7 +215,8 @@
             this.bunifuButton1.IdleIconLeftImage = null;
             this.bunifuButton1.IdleIconRightImage = null;
             this.bunifuButton1.IndicateFocus = false;
-            this.bunifuButton1.Location = new System.Drawing.Point(64, 0);
+            this.bunifuButton1.Location = new System.Drawing.Point(85, 0);
+            this.bunifuButton1.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuButton1.Name = "bunifuButton1";
             this.bunifuButton1.OnDisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(191)))), ((int)(((byte)(191)))));
             this.bunifuButton1.OnDisabledState.BorderRadius = 1;
@@ -246,7 +250,7 @@
             this.bunifuButton1.OnPressedState.ForeColor = System.Drawing.Color.White;
             this.bunifuButton1.OnPressedState.IconLeftImage = null;
             this.bunifuButton1.OnPressedState.IconRightImage = null;
-            this.bunifuButton1.Size = new System.Drawing.Size(42, 24);
+            this.bunifuButton1.Size = new System.Drawing.Size(56, 30);
             this.bunifuButton1.TabIndex = 0;
             this.bunifuButton1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.bunifuButton1.TextAlignment = System.Windows.Forms.HorizontalAlignment.Center;
@@ -260,12 +264,13 @@
             this.MessageSettingsButton.AllowFocused = false;
             this.MessageSettingsButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.MessageSettingsButton.AutoSizeHeight = true;
-            this.MessageSettingsButton.BorderRadius = 8;
+            this.MessageSettingsButton.BorderRadius = 10;
             this.MessageSettingsButton.Image = global::Moria.Properties.Resources.alt_ok;
             this.MessageSettingsButton.IsCircle = true;
-            this.MessageSettingsButton.Location = new System.Drawing.Point(202, 3);
+            this.MessageSettingsButton.Location = new System.Drawing.Point(269, 4);
+            this.MessageSettingsButton.Margin = new System.Windows.Forms.Padding(4);
             this.MessageSettingsButton.Name = "MessageSettingsButton";
-            this.MessageSettingsButton.Size = new System.Drawing.Size(16, 16);
+            this.MessageSettingsButton.Size = new System.Drawing.Size(21, 21);
             this.MessageSettingsButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.MessageSettingsButton.TabIndex = 1;
             this.MessageSettingsButton.TabStop = false;
@@ -282,11 +287,11 @@
             this.bunifuLabel1.Font = new System.Drawing.Font("Segoe UI Emoji", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bunifuLabel1.ForeColor = System.Drawing.Color.Black;
             this.bunifuLabel1.Location = new System.Drawing.Point(0, 0);
-            this.bunifuLabel1.Margin = new System.Windows.Forms.Padding(2);
+            this.bunifuLabel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.bunifuLabel1.Name = "bunifuLabel1";
-            this.bunifuLabel1.Padding = new System.Windows.Forms.Padding(0, 8, 8, 8);
+            this.bunifuLabel1.Padding = new System.Windows.Forms.Padding(0, 10, 11, 10);
             this.bunifuLabel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.bunifuLabel1.Size = new System.Drawing.Size(179, 44);
+            this.bunifuLabel1.Size = new System.Drawing.Size(239, 54);
             this.bunifuLabel1.TabIndex = 0;
             this.bunifuLabel1.Text = "asdd";
             this.bunifuLabel1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
@@ -294,13 +299,13 @@
             // 
             // UserControl2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.bunifuGradientPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UserControl2";
-            this.Size = new System.Drawing.Size(224, 45);
+            this.Size = new System.Drawing.Size(299, 55);
             this.Load += new System.EventHandler(this.UserControl2_Load);
             this.bunifuGradientPanel1.ResumeLayout(false);
             this.MessageSettingsPanel.ResumeLayout(false);

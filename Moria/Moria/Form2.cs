@@ -18,6 +18,7 @@ using System.Net;
 using Bunifu.Framework.UI;
 using Bunifu.UI.WinForms.BunifuButton;
 using Bunifu.UI.WinForms;
+using System.Device.Location;
 
 namespace Moria
 {
@@ -27,14 +28,16 @@ namespace Moria
         public Form2()
         {
             InitializeComponent();
-
         }
+
+        GeoCoordinateWatcher watcher = new GeoCoordinateWatcher(); //konum şeysi
 
         String randomCode;
         public static String to;
         private bool emailDogrulandimi = false;
 
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+
         private void Form2_Load(object sender, EventArgs e)
         {
             Timer timer = new Timer();
@@ -1009,9 +1012,7 @@ namespace Moria
                 MessageEditPanel.Visible = false;
                 UserControl2İsim = string.Empty;
             }
-
         }
-
         private void bunifuIconButton4_Click(object sender, EventArgs e) // mesaj üç nokta buttonu
         {
             if (bunifuGradientPanel2.Visible == false)
@@ -1086,6 +1087,88 @@ namespace Moria
         private void bunifuButton15_Click(object sender, EventArgs e) // sevgi emoji
         {
             EmojiButtonClick(" &#x1F60D ");
+        }
+
+        private void bunifuIconButton3_Click(object sender, EventArgs e)
+        {
+            watcher.Start();
+            // Konum bilgisi değiştiğinde tetiklenecek olay
+            watcher.PositionChanged += (param, userEvent) =>
+            {
+                var coordinate = userEvent.Position.Location;
+                double latitude = coordinate.Latitude;
+                double longitude = coordinate.Longitude;
+
+                // Belirli bir hassasiyetle yuvarla (örneğin, 6 ondalık basamak) google maps de 6 basamakta çalıştı
+                latitude = Math.Round(latitude, 6);
+                longitude = Math.Round(longitude, 6);
+
+                
+                string googleMapsLink = $"https://www.google.com/maps?q={latitude.ToString().Replace(',', '.')},{longitude.ToString().Replace(',', '.')}";
+                bunifuTextBox11.Text = googleMapsLink;
+            };
+            if (watcher.Status == GeoPositionStatus.Ready)
+            {
+                watcher.Stop();
+            }
+        }
+
+        /*private void DosyaIndir(int mesajID, string dosyaAdi)
+        {
+            using (SqlConnection connection = new SqlConnection(constring))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("SELECT DosyaVerisi FROM Mesajlar WHERE MesajID = @MesajID", connection))
+                {
+                    command.Parameters.AddWithValue("@MesajID", mesajID);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            byte[] dosyaVerisi = (byte[])reader["DosyaVerisi"];
+
+                            // Dosyayı belirtilen bir yola kaydet
+                            string hedefYol = Path.Combine("your_target_directory", dosyaAdi);
+                            File.WriteAllBytes(hedefYol, dosyaVerisi);
+
+                            MessageBox.Show("Dosya indirildi: " + hedefYol);
+                        }
+                    }
+                }
+            }
+        }*/
+
+        private void bunifuIconButton2_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Dosya Seç";
+                openFileDialog.Filter = "Tüm Dosyalar|*.*";
+                openFileDialog.Multiselect = false;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string dosyaYolu = openFileDialog.FileName;
+                    byte[] dosyaVerisi = File.ReadAllBytes(dosyaYolu);
+                    using (SqlConnection connection = new SqlConnection(constring))
+                    {
+                        connection.Open();
+
+                        using (SqlCommand command = new SqlCommand("INSERT INTO Chat (userone, usertwo, message, DosyaAdi, DosyaVerisi) VALUES (@userone, @usertwo, @message, @DosyaAdi, @DosyaVerisi)", connection))
+                        {
+                            command.Parameters.AddWithValue("@userone", bunifuTextBox1.Text);
+                            command.Parameters.AddWithValue("@usertwo", bunifuLabel1.Text);
+                            command.Parameters.AddWithValue("@message", "RG9zeWE=");//Dosya demek ama şifreli hali
+                            command.Parameters.AddWithValue("@DosyaAdi", Path.GetFileName(dosyaYolu));
+                            command.Parameters.AddWithValue("@DosyaVerisi", dosyaVerisi);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    MessageBox.Show("Dosya gönderildi.");
+                }
+            }
         }
     }
 }
