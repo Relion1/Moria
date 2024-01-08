@@ -25,7 +25,7 @@ namespace Moria
 {
     public partial class Form2 : Form
     {
-        public string emailname {get;set;} 
+        public string emailname { get; set; }
         public Form2()
         {
             InitializeComponent();
@@ -36,8 +36,10 @@ namespace Moria
         String randomCode;
         public static String to;
         private bool emailDogrulandimi = false;
+        string googleMapsLink = "";
 
-        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -110,7 +112,8 @@ namespace Moria
             if (check)
             {
                 bunifuPanel1.Width += 10;
-                if(bunifuPanel1.Size == bunifuPanel1.MaximumSize) {
+                if (bunifuPanel1.Size == bunifuPanel1.MaximumSize)
+                {
                     bunifuPictureBox2.Left = +230;
                     timer1.Stop();
                     check = false;
@@ -120,7 +123,7 @@ namespace Moria
             else
             {
                 bunifuPanel1.Width -= 10;
-                if(bunifuPanel1.Size==bunifuPanel1.MinimumSize)
+                if (bunifuPanel1.Size == bunifuPanel1.MinimumSize)
                 {
                     bunifuPictureBox2.Left = 2;
                     timer1.Stop();
@@ -137,7 +140,7 @@ namespace Moria
 
         private void bunifuPictureBox3_Click(object sender, EventArgs e)
         {
-            if(bunifuPanel6.Visible == false)
+            if (bunifuPanel6.Visible == false)
             {
                 bunifuPanel6.Visible = true;
             }
@@ -217,7 +220,7 @@ namespace Moria
             string updateLoginQuery = $"UPDATE login SET firstname=@fname, lastname=@lname, email=@email, image=@image WHERE email = '{emailname}'";
             emailname = bunifuTextBox7.Text;
 
-            
+
             byte[] imageBytes;
             using (MemoryStream ms = new MemoryStream())
             {
@@ -280,7 +283,7 @@ namespace Moria
                 errorProvider1.SetError(bunifuTextBox7, string.Empty);
             }
 
-         
+
 
             string validEmail = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
             if (Regex.IsMatch(bunifuTextBox7.Text, validEmail))
@@ -293,7 +296,7 @@ namespace Moria
                 return;
             }
 
-            if(emailname != bunifuTextBox7.Text)
+            if (emailname != bunifuTextBox7.Text)
             {
                 if (!IsEmailExists(bunifuTextBox7.Text))//eğer uygulama kapatıpı açılmaz ise login page den giriş yapılamıyor restart gerekiyor
                 {
@@ -323,7 +326,7 @@ namespace Moria
                 panel3.Height += 10;
                 if (panel3.Size == panel3.MaximumSize)
                 {
-                    
+
                     timer2.Stop();
                     check = false;
                     //alt satır olmuyor anlamadım butonun image özelliği yok diye herhalde çok önemli değil bence
@@ -335,7 +338,7 @@ namespace Moria
                 panel3.Height -= 10;
                 if (panel3.Size == panel3.MinimumSize)
                 {
-                    
+
                     timer2.Stop();
                     check = true;
                     //alt satır olmuyor anlamadım butonun image özelliği yok diye herhalde çok önemli değil bence
@@ -346,18 +349,18 @@ namespace Moria
 
         private void updateprofile_Click(object sender, EventArgs e)
         {
-            if(bunifuPictureBox3.Visible == true)
+            if (bunifuPictureBox3.Visible == true)
             {
                 bunifuPictureBox3.Visible = false;
             }
-            
+
             panel2.BringToFront();
             if (panel2.Visible == false)
             {
                 panel2.Visible = true;
             }
-            if (panel4.Visible==true)
-            { 
+            if (panel4.Visible == true)
+            {
                 panel4.Visible = false;
             }
         }
@@ -399,7 +402,7 @@ namespace Moria
             {
                 panel4.Visible = true;
             }
-            if (panel2.Visible==true)
+            if (panel2.Visible == true)
             {
                 panel2.Visible = false;
             }
@@ -461,7 +464,7 @@ namespace Moria
                 MessageBox.Show("Sifre ve onay sifresi ayni olmak zorunda!");
                 return;
             }
-            
+
 
         }
 
@@ -524,7 +527,7 @@ namespace Moria
 
         private void passChangeShowPass_CheckedChanged(object sender, EventArgs e)
         {
-            if(passChangeShowPass.Checked)
+            if (passChangeShowPass.Checked)
             {
                 bunifuTextBox8.PasswordChar = '\0';
                 bunifuTextBox9.PasswordChar = '\0';
@@ -549,14 +552,14 @@ namespace Moria
 
             UserItem();
             panel5.BringToFront();
-            if (panel2.Visible == true || panel4.Visible==true)
+            if (panel2.Visible == true || panel4.Visible == true)
             {
                 panel2.Visible = false;
                 panel4.Visible = false;
             }
 
-                panel5.Visible = true;
-            
+            panel5.Visible = true;
+
         }
 
         private void bunifuButton2_Click(object sender, EventArgs e) // HOME BUTTON
@@ -586,27 +589,27 @@ namespace Moria
             DataTable table = new DataTable();
             adapter.Fill(table);
 
-            if(table !=null)
+            if (table != null)
             {
-                if(table.Rows.Count > 0)
+                if (table.Rows.Count > 0)
                 {
                     UserControl1[] userControls = new UserControl1[table.Rows.Count];
 
-                    for(int i = 0; i < 1; i++)
+                    for (int i = 0; i < 1; i++)
                     {
-                        foreach(DataRow row in table.Rows)
+                        foreach (DataRow row in table.Rows)
                         {
 
-                        userControls[i] = new UserControl1();
-                        MemoryStream stream = new MemoryStream((byte[])row["image"]);
-                        userControls[i].Icon = new Bitmap(stream);
-                        userControls[i].Title = row["firstname"].ToString();
+                            userControls[i] = new UserControl1();
+                            MemoryStream stream = new MemoryStream((byte[])row["image"]);
+                            userControls[i].Icon = new Bitmap(stream);
+                            userControls[i].Title = row["firstname"].ToString();
 
-                        if (userControls[i].Title == bunifuTextBox1.Text)
+                            if (userControls[i].Title == bunifuTextBox1.Text)
                             {
                                 flowLayoutPanel1.Controls.Remove(userControls[i]);
                             }
-                        else
+                            else
                             {
                                 flowLayoutPanel1.Controls.Add(userControls[i]);
                             }
@@ -635,7 +638,7 @@ namespace Moria
         {
             if (string.IsNullOrEmpty(bunifuTextBox11.Text))
             {
-                MessageBox.Show("Boş mesaj gönderemezsiniz!"); 
+                MessageBox.Show("Boş mesaj gönderemezsiniz!");
                 return;
             }
 
@@ -657,7 +660,7 @@ namespace Moria
         {
             SqlDataAdapter adapter;
             // select * from chatte sonda order by time 1 e göre sıralaması lazım mesajları ama sıralama bozuluyor anlamadım.
-            adapter = new SqlDataAdapter("SELECT * FROM Chat WHERE (userone = @user1 AND usertwo = @user2) OR (userone = @user2 AND usertwo = @user1)", constring); 
+            adapter = new SqlDataAdapter("SELECT * FROM Chat WHERE (userone = @user1 AND usertwo = @user2) OR (userone = @user2 AND usertwo = @user1)", constring);
             adapter.SelectCommand.Parameters.AddWithValue("@user1", bunifuLabel1.Text);
             adapter.SelectCommand.Parameters.AddWithValue("@user2", bunifuTextBox1.Text);
             DataTable table = new DataTable();
@@ -670,7 +673,7 @@ namespace Moria
                 UserControl3[] userControls3s = new UserControl3[table.Rows.Count];
                 int userControl2Index = 0;
                 int userControl3Index = 0;
-
+                string konumVarmi;
                 foreach (DataRow row in table.Rows)
                 {
 
@@ -687,6 +690,14 @@ namespace Moria
                             userControls2s[userControl2Index].SetDosyaIcerigi(true);
                         }
 
+                        konumVarmi = Decode(row["message"].ToString());
+                        if (konumVarmi.Contains("https://www.google.com/maps?q=")){
+                            userControls2s[userControl2Index].Title = null;
+                            userControls2s[userControl2Index].LinkLabelVisible = true;
+                            userControls2s[userControl2Index].LinkLabelText = googleMapsLink;
+                        }
+
+
                         flowLayoutPanel2.Controls.Add(userControls2s[userControl2Index]);
                         flowLayoutPanel2.ScrollControlIntoView(userControls2s[userControl2Index]);
 
@@ -702,6 +713,14 @@ namespace Moria
                         if (row["DosyaVerisi"] != DBNull.Value)
                         {
                             userControls3s[userControl3Index].SetDosyaIcerigi(true);
+                        }
+
+                        konumVarmi = Decode(row["message"].ToString());
+                        if (konumVarmi.Contains("https://www.google.com/maps?q="))
+                        {
+                            userControls3s[userControl3Index].Title = null;
+                            userControls3s[userControl3Index].LinkLabelVisible = true;
+                            userControls3s[userControl3Index].LinkLabelText = googleMapsLink;
                         }
 
                         flowLayoutPanel2.Controls.Add(userControls3s[userControl3Index]);
@@ -754,7 +773,7 @@ namespace Moria
 
         private void SendNotification(string title, string message)
         {
-            if(!(Application.OpenForms.Count > 0 && Application.OpenForms[0].Visible))//form ekran da değil ise bu kod çalışcak ve bildirim gidicek ekran da ise sadece ses çalcak
+            if (!(Application.OpenForms.Count > 0 && Application.OpenForms[0].Visible))//form ekran da değil ise bu kod çalışcak ve bildirim gidicek ekran da ise sadece ses çalcak
             {
                 System.Windows.Forms.NotifyIcon notification = new System.Windows.Forms.NotifyIcon();
                 notification.Visible = true;
@@ -771,7 +790,7 @@ namespace Moria
 
         private void userControl11_Load(object sender, EventArgs e)
         {
-            if(panel6.Visible == false && panel7.Visible == false && flowLayoutPanel2.Visible == false)
+            if (panel6.Visible == false && panel7.Visible == false && flowLayoutPanel2.Visible == false)
             {
                 panel6.Visible = true;
                 panel7.Visible = true;
@@ -802,7 +821,7 @@ namespace Moria
         private void bunifuButton24_Click(object sender, EventArgs e)
         {
             bunifuTextBox7.Enabled = false;
-            if(label2.Text != bunifuTextBox7.Text)
+            if (label2.Text != bunifuTextBox7.Text)
             {
                 if (IsEmailExists(bunifuTextBox7.Text))
                 {
@@ -869,7 +888,7 @@ namespace Moria
         {
 
         }
-        private bool toggle=false;
+        private bool toggle = false;
         private void bunifuButton8_Click(object sender, EventArgs e)
         {
 
@@ -889,7 +908,7 @@ namespace Moria
 
         public void bunifuToggleSwitch1_CheckedChanged(object sender, Bunifu.UI.WinForms.BunifuToggleSwitch.CheckedChangedEventArgs e)
         {
-            
+
 
             if (toggle)
             {
@@ -901,7 +920,7 @@ namespace Moria
                 userControl11.BackColor = Color.BlueViolet;
                 userControl21.BackColor = Color.BlueViolet;
                 userControl31.BackColor = Color.BlueViolet;
-                
+
                 userControl11.Invalidate();
                 userControl21.Invalidate();
                 userControl31.Invalidate();
@@ -920,7 +939,7 @@ namespace Moria
                 userControl11.BackColor = Color.Orange;
                 userControl21.BackColor = Color.Orange;
                 userControl31.BackColor = Color.Orange;
-             
+
                 userControl11.Invalidate();
                 userControl21.Invalidate();
                 userControl31.Invalidate();
@@ -1112,9 +1131,8 @@ namespace Moria
                 latitude = Math.Round(latitude, 6);
                 longitude = Math.Round(longitude, 6);
 
-                
-                string googleMapsLink = $"https://www.google.com/maps?q={latitude.ToString().Replace(',', '.')},{longitude.ToString().Replace(',', '.')}";
-                bunifuTextBox11.Text = googleMapsLink;
+
+                googleMapsLink = $"https://www.google.com/maps?q={latitude.ToString().Replace(',', '.')},{longitude.ToString().Replace(',', '.')}";
             };
             if (watcher.Status == GeoPositionStatus.Ready)
             {
@@ -1154,13 +1172,13 @@ namespace Moria
                                 }
                             }
                         }
-                   }
-                    
+                    }
+
+                }
             }
         }
-    }
 
-        
+
         private void bunifuIconButton2_Click(object sender, EventArgs e) //dosya gönder buttonu
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -1191,18 +1209,5 @@ namespace Moria
                 }
             }
         }
-        
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

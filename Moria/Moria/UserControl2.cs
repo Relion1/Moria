@@ -15,6 +15,7 @@ namespace Moria
         public UserControl2()
         {
             InitializeComponent();
+            linkLabel1.Visible = false;
         }
 
         public int MessageId { get; set; }
@@ -25,6 +26,19 @@ namespace Moria
             get { return _title; }
             set { _title = value; bunifuLabel1.Text = value; AddHeighttext(); }
         }
+
+        public bool LinkLabelVisible
+        {
+            get { return linkLabel1.Visible; }
+            set { linkLabel1.Visible = value; }
+        }
+
+        public string LinkLabelText
+        {
+            get { return linkLabel1.Text; }
+            set { linkLabel1.Text = value; }
+        }
+
         void AddHeighttext()
         {
             bunifuLabel1.Height = Uilist.GeTTextHeight(bunifuLabel1) + 10;
