@@ -19,6 +19,7 @@ using Bunifu.Framework.UI;
 using Bunifu.UI.WinForms.BunifuButton;
 using Bunifu.UI.WinForms;
 using System.Device.Location;
+using static System.Windows.Forms.LinkLabel;
 
 namespace Moria
 {
@@ -36,7 +37,7 @@ namespace Moria
         public static String to;
         private bool emailDogrulandimi = false;
 
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-EHBA0PG\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -678,10 +679,14 @@ namespace Moria
                     if (bunifuTextBox1.Text == row["userone"].ToString() && bunifuLabel1.Text == row["usertwo"].ToString())
                     {
                         userControls2s[userControl2Index] = new UserControl2();
-                        //userControls2s[userControl2Index].Dock = DockStyle.Top; tasarımda var
-                        //userControls2s[userControl2Index].BringToFront();       tasarımda var
                         userControls2s[userControl2Index].Title = Decode(row["message"].ToString());
                         userControls2s[userControl2Index].MessageId = messageId;
+
+                        if (row["DosyaVerisi"] != DBNull.Value)
+                        {
+                            userControls2s[userControl2Index].SetDosyaIcerigi(true);
+                        }
+
                         flowLayoutPanel2.Controls.Add(userControls2s[userControl2Index]);
                         flowLayoutPanel2.ScrollControlIntoView(userControls2s[userControl2Index]);
 
@@ -690,11 +695,15 @@ namespace Moria
                     else if (bunifuLabel1.Text == row["userone"].ToString() && bunifuTextBox1.Text == row["usertwo"].ToString())
                     {
                         userControls3s[userControl3Index] = new UserControl3();
-                        //userControls3s[userControl3Index].Dock = DockStyle.Top; tasarımda var
-                        //userControls3s[userControl3Index].BringToFront();       tasarımda var
                         userControls3s[userControl3Index].Title = Decode(row["message"].ToString());
                         userControls3s[userControl3Index].Icon = bunifuPictureBox8.Image;
                         userControls3s[userControl3Index].MessageId = messageId;
+
+                        if (row["DosyaVerisi"] != DBNull.Value)
+                        {
+                            userControls3s[userControl3Index].SetDosyaIcerigi(true);
+                        }
+
                         flowLayoutPanel2.Controls.Add(userControls3s[userControl3Index]);
                         flowLayoutPanel2.ScrollControlIntoView(userControls3s[userControl3Index]);
 
@@ -1089,7 +1098,7 @@ namespace Moria
             EmojiButtonClick(" &#x1F60D ");
         }
 
-        private void bunifuIconButton3_Click(object sender, EventArgs e)
+        private void bunifuIconButton3_Click(object sender, EventArgs e) // konum buttonu
         {
             watcher.Start();
             // Konum bilgisi değiştiğinde tetiklenecek olay
@@ -1113,13 +1122,13 @@ namespace Moria
             }
         }
 
-        /*private void DosyaIndir(int mesajID, string dosyaAdi)
+        public void DosyaIndir(int mesajID)
         {
             using (SqlConnection connection = new SqlConnection(constring))
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("SELECT DosyaVerisi FROM Mesajlar WHERE MesajID = @MesajID", connection))
+                using (SqlCommand command = new SqlCommand("SELECT DosyaVerisi,DosyaAdi FROM Chat WHERE message_id = @MesajID", connection))
                 {
                     command.Parameters.AddWithValue("@MesajID", mesajID);
 
@@ -1128,19 +1137,31 @@ namespace Moria
                         if (reader.Read())
                         {
                             byte[] dosyaVerisi = (byte[])reader["DosyaVerisi"];
+                            string dosyaAdi = reader["DosyaAdi"].ToString();
 
-                            // Dosyayı belirtilen bir yola kaydet
-                            string hedefYol = Path.Combine("your_target_directory", dosyaAdi);
-                            File.WriteAllBytes(hedefYol, dosyaVerisi);
+                            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                            {
+                                saveFileDialog.Filter = "Tüm Dosyalar|*.*";
 
-                            MessageBox.Show("Dosya indirildi: " + hedefYol);
+                                // Dosya adını varsayılan olarak belirledim
+                                saveFileDialog.FileName = dosyaAdi;
+
+                                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    // Dosyayı seçilen yere kaydettim
+                                    File.WriteAllBytes(saveFileDialog.FileName, dosyaVerisi);
+                                    MessageBox.Show("Dosya indirildi: " + saveFileDialog.FileName);
+                                }
+                            }
                         }
-                    }
-                }
+                   }
+                    
             }
-        }*/
+        }
+    }
 
-        private void bunifuIconButton2_Click(object sender, EventArgs e)
+        
+        private void bunifuIconButton2_Click(object sender, EventArgs e) //dosya gönder buttonu
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -1170,5 +1191,18 @@ namespace Moria
                 }
             }
         }
+        
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

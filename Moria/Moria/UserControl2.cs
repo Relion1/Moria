@@ -57,5 +57,28 @@ namespace Moria
         {
             ((Form2)this.ParentForm).MesajiArayuzdenSil(this);
         }
+
+        private bool _dosyaVarMi;
+        public bool DosyaVarMi
+        {
+            get { return _dosyaVarMi; }
+            set
+            {
+                _dosyaVarMi = value;
+                bunifuIconButton1.Visible = value; // Dosya varsa indir butonunu göster
+            }
+        }
+
+        public void SetDosyaIcerigi(bool dosyaVarMi)
+        {
+            DosyaVarMi = dosyaVarMi;
+        }
+ 
+        private void bunifuIconButton1_Click(object sender, EventArgs e)
+        {
+            ((Form2)this.ParentForm).DosyaIndir(MessageId);
+        }
+
+
     }
 }

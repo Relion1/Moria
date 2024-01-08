@@ -143,6 +143,16 @@ namespace Moria.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
         /// </summary>
+        internal static System.Drawing.Bitmap download_icon_143099 {
+            get {
+                object obj = ResourceManager.GetObject("download_icon_143099", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
+        /// </summary>
         internal static System.Drawing.Bitmap EmojiAçma {
             get {
                 object obj = ResourceManager.GetObject("EmojiAçma", resourceCulture);

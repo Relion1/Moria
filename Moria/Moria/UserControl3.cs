@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bunifu.UI.WinForms;
+using Bunifu.UI.WinForms.BunifuButton;
 
 namespace Moria
 {
@@ -51,6 +52,27 @@ namespace Moria
         private void bunifuGradientPanel1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private bool _dosyaVarMi;
+        public bool DosyaVarMi
+        {
+            get { return _dosyaVarMi; }
+            set
+            {
+                _dosyaVarMi = value;
+                bunifuIconButton1.Visible = value; // Dosya varsa indir butonunu göster
+            }
+        }
+
+        public void SetDosyaIcerigi(bool dosyaVarMi)
+        {
+            DosyaVarMi = dosyaVarMi;
+        }
+
+        private void bunifuIconButton1_Click(object sender, EventArgs e)
+        {
+            ((Form2)this.ParentForm).DosyaIndir(MessageId);
         }
     }
 }
