@@ -25,6 +25,22 @@ namespace Moria
 {
     public partial class Form2 : Form
     {
+
+        private List<string> leaderQuotes = new List<string>
+        {
+            "Bana kalsaydı silahların ustası olacağıma felsefenin \nen yüce sırlarının ustası olmayı tercih ederdim.\n-BÜYÜK İSKENDER",
+            "Roma’da ikinci adam olmaktansa, bir köyde \nbirinci adam olmayı tercih ederim. n\n-BÜYÜK İSKENDER",
+            "Devletleri yıkan tüm hatanın altında, \nnice gururun gafleti yatar.\n-YAVUZ SULTAN SELİM",
+            "Zayıf insanlar affetmeyi bilmezler. Affetmek,\n güçlülere has bir özelliktir.\n-MAHATMA GANDHİ",
+            "Benim kazanmam önemli değil,diğerlerinin hepsi kaybetmelidir.,\n güçlülere has bir özelliktir.\n-CENGİZ HAN",
+            "Hayatı ve özgürlüğü için ölümü göze alan \nbir millet asla yenilmez.\n-MUSTAFA KEMAL ATATÜRK",
+            "Egemenlik verilmez, alınır.\n-MUSTAFA KEMAL ATATÜRK",
+            "Yurtta sulh, cihanda sulh.\n-MUSTAFA KEMAL ATATÜRK",
+            "Hayatta en hakiki mürşit ilimdir.\n-MUSTAFA KEMAL ATATÜRK",
+            "Benim naçiz vücudum elbet \nbir gün toprak olacaktır, \n ancak Türkiye Cumhuriyeti ilelebet \npayidar kalacaktır.\n-MUSTAFA KEMAL ATATÜRK",
+            
+        };
+
         public string emailname { get; set; }
         public Form2()
         {
@@ -38,11 +54,13 @@ namespace Moria
         private bool emailDogrulandimi = false;
         string googleMapsLink = "";
 
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
 
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            
+            ShowRandomQuote();
             Timer timer = new Timer();
             timer.Interval = (10 * 1000);
             timer.Tick += new EventHandler(timer3_Tick);
@@ -917,36 +935,26 @@ namespace Moria
                 panel1.BackColor = Color.BlueViolet;
                 bunifuPanel2.BackgroundColor = Color.BlueViolet;
                 bunifuGradientPanel1.BackColor = Color.BlueViolet;
-                userControl11.BackColor = Color.BlueViolet;
-                userControl21.BackColor = Color.BlueViolet;
-                userControl31.BackColor = Color.BlueViolet;
-
-                userControl11.Invalidate();
-                userControl21.Invalidate();
-                userControl31.Invalidate();
                 panel5.BackColor = Color.BlueViolet;
-                bunifuGradientPanel1.Visible = true;
+                bunifuGradientPanel1.GradientBottomLeft = Color.BlueViolet;  
+                bunifuGradientPanel1.GradientTopLeft = Color.BlueViolet;
+                bunifuGradientPanel1.GradientTopRight = Color.FromArgb(150, 129, 235);
+                bunifuGradientPanel1.GradientBottomRight = Color.FromArgb(150, 129, 235);
                 bunifuLabel2.Text = ("Dark Mode");
 
             }
 
             else
             {
-                this.BackColor = Color.Orange;
-                panel1.BackColor = Color.Orange;
-                bunifuPanel2.BackgroundColor = Color.Orange;
-                bunifuGradientPanel1.BackColor = Color.Orange;
-                userControl11.BackColor = Color.Orange;
-                userControl21.BackColor = Color.Orange;
-                userControl31.BackColor = Color.Orange;
-
-                userControl11.Invalidate();
-                userControl21.Invalidate();
-                userControl31.Invalidate();
-                panel5.BackColor = Color.Orange;
-                bunifuGradientPanel1.Visible = false;
+                this.BackColor = Color.FromArgb(242, 161, 84);
+                panel1.BackColor = Color.FromArgb(242, 161, 84);
+                bunifuPanel2.BackgroundColor = Color.FromArgb(242, 161, 84);
+                bunifuGradientPanel1.GradientBottomLeft = Color.FromArgb(242, 161, 84);
+                bunifuGradientPanel1.GradientTopLeft = Color.FromArgb(242, 161, 84);
+                bunifuGradientPanel1.GradientTopRight = Color.FromArgb(150, 129, 235);
+                bunifuGradientPanel1.GradientBottomRight = Color.FromArgb(150, 129, 235);
+                panel5.BackColor = Color.FromArgb(242, 161, 84);
                 bunifuLabel2.Text = ("Light Mode");
-
             }
 
             // Anahtar değişkenini tersine çevir
@@ -1208,6 +1216,38 @@ namespace Moria
                     MessageBox.Show("Dosya gönderildi.");
                 }
             }
+        }
+        bool move;
+        int mouse_x;
+        int mouse_y;
+        private void bunifuGradientPanel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            move = true;
+            mouse_x = e.X;
+            mouse_y = e.Y;
+        }
+
+        private void bunifuGradientPanel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (move == true)
+            {
+                this.SetDesktopLocation(MousePosition.X - mouse_x, MousePosition.Y - mouse_y);
+            }
+        }
+
+        private void bunifuGradientPanel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            move = false;
+        }
+        private void ShowRandomQuote()
+        {
+            // Rastgele bir lider sözünü seç
+            Random random = new Random();
+            int index = random.Next(leaderQuotes.Count);
+            string randomQuote = leaderQuotes[index];
+
+            // Label kontrolüne sözü yaz
+            label15.Text = randomQuote;
         }
     }
 }

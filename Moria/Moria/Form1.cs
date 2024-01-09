@@ -21,6 +21,7 @@ namespace Moria
         public Form1()
         {
             InitializeComponent();
+            
         }
 
         String randomCode;
@@ -30,10 +31,12 @@ namespace Moria
         Color btn = Color.SpringGreen;
         Color btr = Color.FromArgb(137, 140, 142);
         Color bb = Color.DarkSlateGray;
-        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
+        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
+            
             BtnLogin.PerformClick();
             bunifuButton4.Enabled = false;
             bunifuTextBox2.PasswordChar = '*';
@@ -408,6 +411,38 @@ namespace Moria
         private void bunifuTextBox7_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        
+        private void bunifuGradientPanel1_Click(object sender, EventArgs e)
+        {
+           
+        }
+        bool move;
+        int mouse_x;
+        int mouse_y;
+        private void bunifuGradientPanel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            move = true;
+            mouse_x = e.X;
+            mouse_y = e.Y;
+        }
+
+        private void bunifuGradientPanel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (move == true)
+            {
+                this.SetDesktopLocation(MousePosition.X - mouse_x, MousePosition.Y - mouse_y);
+            }
+        }
+
+        private void bunifuGradientPanel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            move = false;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

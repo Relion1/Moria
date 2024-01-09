@@ -258,3 +258,7 @@ C:\Users\ERDEMON\Moria\Moria\bin\Debug\Bunifu.UI.WinForms.xml
 C:\Users\ERDEMON\Moria\Moria\obj\Debug\Moria.UserControl1.resources
 C:\Users\ERDEMON\Moria\Moria\obj\Debug\Moria.UserControl2.resources
 C:\Users\ERDEMON\Moria\Moria\obj\Debug\Moria.UserControl3.resources
+C:\Users\ERDEMON\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.UserControl1.resources
+C:\Users\ERDEMON\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.UserControl2.resources
+C:\Users\ERDEMON\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.UserControl3.resources
+C:\Users\ERDEMON\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.Form3.resources
