@@ -262,3 +262,4 @@ C:\Users\ERDEMON\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.UserControl1
 C:\Users\ERDEMON\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.UserControl2.resources
 C:\Users\ERDEMON\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.UserControl3.resources
 C:\Users\ERDEMON\Documents\GitHub\Moria\Moria\Moria\obj\Debug\Moria.Form3.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Debug\Moria.Form3.resources

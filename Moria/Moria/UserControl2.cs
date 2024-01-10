@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -33,11 +34,7 @@ namespace Moria
             set { linkLabel1.Visible = value; }
         }
 
-        public string LinkLabelText
-        {
-            get { return linkLabel1.Text; }
-            set { linkLabel1.Text = value; }
-        }
+        public string LinkLabelLink = "";
 
         void AddHeighttext()
         {
@@ -93,6 +90,13 @@ namespace Moria
             ((Form2)this.ParentForm).DosyaIndir(MessageId);
         }
 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Link tıklandığında yapılacak işlemler
+            string url = LinkLabelLink;
 
+            // Tarayıcıda URL'yi açma
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        }
     }
 }

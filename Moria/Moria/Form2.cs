@@ -28,7 +28,7 @@ namespace Moria
 
         private List<string> leaderQuotes = new List<string>
         {
-            "Bana kalsaydı silahların ustası olacağıma felsefenin \nen yüce sırlarının ustası olmayı tercih ederdim.\n-BÜYÜK İSKENDER",
+            "Bana kalsaydı silahların ustası olacağıma felsefenin \nen yüce sırlarının \nustası olmayı tercih ederdim.\n-BÜYÜK İSKENDER",
             "Roma’da ikinci adam olmaktansa, bir köyde \nbirinci adam olmayı tercih ederim. n\n-BÜYÜK İSKENDER",
             "Devletleri yıkan tüm hatanın altında, \nnice gururun gafleti yatar.\n-YAVUZ SULTAN SELİM",
             "Zayıf insanlar affetmeyi bilmezler. Affetmek,\n güçlülere has bir özelliktir.\n-MAHATMA GANDHİ",
@@ -37,7 +37,7 @@ namespace Moria
             "Egemenlik verilmez, alınır.\n-MUSTAFA KEMAL ATATÜRK",
             "Yurtta sulh, cihanda sulh.\n-MUSTAFA KEMAL ATATÜRK",
             "Hayatta en hakiki mürşit ilimdir.\n-MUSTAFA KEMAL ATATÜRK",
-            "Benim naçiz vücudum elbet \nbir gün toprak olacaktır, \n ancak Türkiye Cumhuriyeti ilelebet \npayidar kalacaktır.\n-MUSTAFA KEMAL ATATÜRK",
+            "Benim naçiz vücudum elbet \nbir gün toprak olacaktır, \n ancak \nTürkiye Cumhuriyeti ilelebet \npayidar kalacaktır.\n-MUSTAFA KEMAL ATATÜRK",
             
         };
 
@@ -54,8 +54,7 @@ namespace Moria
         private bool emailDogrulandimi = false;
         string googleMapsLink = "";
 
-        string constring = "Data Source=DESKTOP-N4A1HVD\\MSSQLSERVER01;Initial Catalog=moria_database;Integrated Security=True";
-
+        string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -288,8 +287,6 @@ namespace Moria
             {
                 errorProvider1.SetError(bunifuTextBox6, string.Empty);
             }
-
-
 
             if (string.IsNullOrEmpty(bunifuTextBox7.Text.Trim()))
             {
@@ -710,9 +707,9 @@ namespace Moria
 
                         konumVarmi = Decode(row["message"].ToString());
                         if (konumVarmi.Contains("https://www.google.com/maps?q=")){
-                            userControls2s[userControl2Index].Title = null;
+                            userControls2s[userControl2Index].Title = googleMapsLink;
                             userControls2s[userControl2Index].LinkLabelVisible = true;
-                            userControls2s[userControl2Index].LinkLabelText = googleMapsLink;
+                            userControls2s[userControl2Index].LinkLabelLink = googleMapsLink;
                         }
 
 
@@ -736,9 +733,9 @@ namespace Moria
                         konumVarmi = Decode(row["message"].ToString());
                         if (konumVarmi.Contains("https://www.google.com/maps?q="))
                         {
-                            userControls3s[userControl3Index].Title = null;
+                            userControls3s[userControl3Index].Title = googleMapsLink;
                             userControls3s[userControl3Index].LinkLabelVisible = true;
-                            userControls3s[userControl3Index].LinkLabelText = googleMapsLink;
+                            userControls3s[userControl3Index].LinkLabelLink = googleMapsLink;
                         }
 
                         flowLayoutPanel2.Controls.Add(userControls3s[userControl3Index]);
@@ -791,19 +788,12 @@ namespace Moria
 
         private void SendNotification(string title, string message)
         {
-            if (!(Application.OpenForms.Count > 0 && Application.OpenForms[0].Visible))//form ekran da değil ise bu kod çalışcak ve bildirim gidicek ekran da ise sadece ses çalcak
-            {
-                System.Windows.Forms.NotifyIcon notification = new System.Windows.Forms.NotifyIcon();
-                notification.Visible = true;
-                notification.Icon = System.Drawing.SystemIcons.Asterisk;
-                notification.BalloonTipTitle = title;
-                notification.BalloonTipText = Decode(message); //veri tabanındaki şifreli mesajı bildirimde gösterebilmek için
-                notification.ShowBalloonTip(2000); // 2000 milliseconds (2 seconds)
-            }
-            else
-            {
-                SystemSounds.Exclamation.Play();
-            }
+            System.Windows.Forms.NotifyIcon notification = new System.Windows.Forms.NotifyIcon();
+            notification.Visible = true;
+            notification.Icon = System.Drawing.SystemIcons.Asterisk;
+            notification.BalloonTipTitle = title;
+            notification.BalloonTipText = Decode(message); //veri tabanındaki şifreli mesajı bildirimde gösterebilmek için
+            notification.ShowBalloonTip(2000); // 2000 milliseconds (2 seconds)
         }
 
         private void userControl11_Load(object sender, EventArgs e)
@@ -1141,6 +1131,7 @@ namespace Moria
 
 
                 googleMapsLink = $"https://www.google.com/maps?q={latitude.ToString().Replace(',', '.')},{longitude.ToString().Replace(',', '.')}";
+                bunifuTextBox11.Text = googleMapsLink;
             };
             if (watcher.Status == GeoPositionStatus.Ready)
             {
