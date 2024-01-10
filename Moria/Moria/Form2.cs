@@ -52,6 +52,7 @@ namespace Moria
         public static String to;
         private bool emailDogrulandimi = false;
         string googleMapsLink = "";
+        private bool sesliToggle = true;
 
         string constring = "Data Source=KAPOS\\SQLEXPRESS;Initial Catalog=moria_database;Integrated Security=True";
 
@@ -712,7 +713,6 @@ namespace Moria
                             userControls2s[userControl2Index].LinkLabelLink = googleMapsLink;
                         }
 
-
                         flowLayoutPanel2.Controls.Add(userControls2s[userControl2Index]);
                         flowLayoutPanel2.ScrollControlIntoView(userControls2s[userControl2Index]);
 
@@ -747,10 +747,12 @@ namespace Moria
 
                         if (!isNotified)
                         {
-                            SendNotification("Yeni bir mesajın var", row["message"].ToString());
+                            if (sesliToggle)
+                            {
+                                SendNotification("Yeni bir mesajın var", row["message"].ToString());
+                            }
                             MarkAsNotified(row["message"].ToString());
                         }
-
                         userControl3Index++;
                     }
                 }
@@ -917,7 +919,6 @@ namespace Moria
 
         public void bunifuToggleSwitch1_CheckedChanged(object sender, Bunifu.UI.WinForms.BunifuToggleSwitch.CheckedChangedEventArgs e)
         {
-
 
             if (toggle)
             {
@@ -1118,24 +1119,23 @@ namespace Moria
 
         private void bunifuIconButton3_Click(object sender, EventArgs e) // konum buttonu
         {
-            watcher.Start();
-            // Konum bilgisi değiştiğinde tetiklenecek olay
-            watcher.PositionChanged += (param, userEvent) =>
-            {
-                var coordinate = userEvent.Position.Location;
-                double latitude = coordinate.Latitude;
-                double longitude = coordinate.Longitude;
+            if(MessageBox.Show("Konum gönderilmesini onaylıyormusunuz", "Onay Kutusu", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes){
+                watcher.Start();
+                // Konum bilgisi değiştiğinde tetiklenecek olay
+                watcher.PositionChanged += (param, userEvent) =>
+                {
+                    var coordinate = userEvent.Position.Location;
+                    double latitude = coordinate.Latitude;
+                    double longitude = coordinate.Longitude;
 
-                // Belirli bir hassasiyetle yuvarla (örneğin, 6 ondalık basamak) google maps de 6 basamakta çalıştı
-                latitude = Math.Round(latitude, 6);
-                longitude = Math.Round(longitude, 6);
+                    // Belirli bir hassasiyetle yuvarla (örneğin, 6 ondalık basamak) google maps de 6 basamakta çalıştı
+                    latitude = Math.Round(latitude, 6);
+                    longitude = Math.Round(longitude, 6);
 
 
-                googleMapsLink = $"https://www.google.com/maps?q={latitude.ToString().Replace(',', '.')},{longitude.ToString().Replace(',', '.')}";
-                bunifuTextBox11.Text = googleMapsLink;
-            };
-            if (watcher.Status == GeoPositionStatus.Ready)
-            {
+                    googleMapsLink = $"https://www.google.com/maps?q={latitude.ToString().Replace(',', '.')},{longitude.ToString().Replace(',', '.')}";
+                    bunifuTextBox11.Text = googleMapsLink;
+                };
                 watcher.Stop();
             }
         }
@@ -1240,6 +1240,20 @@ namespace Moria
 
             // Label kontrolüne sözü yaz
             label15.Text = randomQuote;
+        }
+
+        private void bunifuToggleSwitch2_CheckedChanged(object sender, Bunifu.UI.WinForms.BunifuToggleSwitch.CheckedChangedEventArgs e)
+        {
+            if (sesliToggle)
+            {
+                sesliToggle = false;
+                bunifuLabel3.Text = "Bildirimler kapalı";
+            }
+            else
+            {
+                sesliToggle = true;
+                bunifuLabel3.Text = "Bildirimler açık";
+            }
         }
     }
 }
