@@ -28,7 +28,7 @@ namespace Moria
 
         private List<string> leaderQuotes = new List<string>
         {
-            "Bana kalsaydı silahların ustası olacağıma felsefenin \nen yüce sırlarının \nustası olmayı tercih ederdim.\n-BÜYÜK İSKENDER",
+            "Bana kalsaydı silahların ustası olacağıma felsefenin \nen yüce sırlarının ustası olmayı tercih ederdim.\n-BÜYÜK İSKENDER",
             "Roma’da ikinci adam olmaktansa, bir köyde \nbirinci adam olmayı tercih ederim. n\n-BÜYÜK İSKENDER",
             "Devletleri yıkan tüm hatanın altında, \nnice gururun gafleti yatar.\n-YAVUZ SULTAN SELİM",
             "Zayıf insanlar affetmeyi bilmezler. Affetmek,\n güçlülere has bir özelliktir.\n-MAHATMA GANDHİ",
@@ -37,7 +37,7 @@ namespace Moria
             "Egemenlik verilmez, alınır.\n-MUSTAFA KEMAL ATATÜRK",
             "Yurtta sulh, cihanda sulh.\n-MUSTAFA KEMAL ATATÜRK",
             "Hayatta en hakiki mürşit ilimdir.\n-MUSTAFA KEMAL ATATÜRK",
-            "Benim naçiz vücudum elbet \nbir gün toprak olacaktır, \n ancak \nTürkiye Cumhuriyeti ilelebet \npayidar kalacaktır.\n-MUSTAFA KEMAL ATATÜRK",
+            "Benim naçiz vücudum elbet bir gün toprak olacaktır, ancak \nTürkiye Cumhuriyeti ilelebet payidar kalacaktır.\n-MUSTAFA KEMAL ATATÜRK",
         };
 
         public string emailname { get; set; }
@@ -706,6 +706,7 @@ namespace Moria
 
                         konumVarmi = Decode(row["message"].ToString());
                         if (konumVarmi.Contains("https://www.google.com/maps?q=")){
+                            googleMapsLink = konumVarmi;
                             userControls2s[userControl2Index].Title = googleMapsLink;
                             userControls2s[userControl2Index].LinkLabelVisible = true;
                             userControls2s[userControl2Index].LinkLabelLink = googleMapsLink;
@@ -732,6 +733,7 @@ namespace Moria
                         konumVarmi = Decode(row["message"].ToString());
                         if (konumVarmi.Contains("https://www.google.com/maps?q="))
                         {
+                            googleMapsLink = konumVarmi;
                             userControls3s[userControl3Index].Title = googleMapsLink;
                             userControls3s[userControl3Index].LinkLabelVisible = true;
                             userControls3s[userControl3Index].LinkLabelLink = googleMapsLink;

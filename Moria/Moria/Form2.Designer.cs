@@ -1832,7 +1832,7 @@
             this.userControl21.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.userControl21.MessageId = 0;
             this.userControl21.Name = "userControl21";
-            this.userControl21.Size = new System.Drawing.Size(400, 59);
+            this.userControl21.Size = new System.Drawing.Size(400, 64);
             this.userControl21.TabIndex = 0;
             this.userControl21.Title = null;
             // 
@@ -1842,7 +1842,7 @@
             this.userControl31.DosyaVarMi = false;
             this.userControl31.Icon = null;
             this.userControl31.LinkLabelVisible = false;
-            this.userControl31.Location = new System.Drawing.Point(3, 65);
+            this.userControl31.Location = new System.Drawing.Point(3, 70);
             this.userControl31.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.userControl31.MessageId = 0;
             this.userControl31.Name = "userControl31";
@@ -4329,7 +4329,7 @@
             this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(129)))), ((int)(((byte)(235)))));
-            this.label15.Location = new System.Drawing.Point(553, 257);
+            this.label15.Location = new System.Drawing.Point(425, 257);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(101, 31);

@@ -61,18 +61,19 @@
             this.bunifuGradientPanel1.GradientTopLeft = System.Drawing.Color.BlueViolet;
             this.bunifuGradientPanel1.GradientTopRight = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(129)))), ((int)(((byte)(235)))));
             this.bunifuGradientPanel1.Location = new System.Drawing.Point(0, 0);
-            this.bunifuGradientPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bunifuGradientPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuGradientPanel1.Name = "bunifuGradientPanel1";
             this.bunifuGradientPanel1.Quality = 10;
-            this.bunifuGradientPanel1.Size = new System.Drawing.Size(293, 54);
+            this.bunifuGradientPanel1.Size = new System.Drawing.Size(298, 59);
             this.bunifuGradientPanel1.TabIndex = 1;
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(17, 22);
+            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.linkLabel1.Location = new System.Drawing.Point(3, 25);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(98, 16);
+            this.linkLabel1.Size = new System.Drawing.Size(148, 25);
             this.linkLabel1.TabIndex = 4;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Konum için tıkla";
@@ -102,7 +103,7 @@
             this.bunifuIconButton1.Image = global::Moria.Properties.Resources.download_icon_143099;
             this.bunifuIconButton1.ImageMargin = new System.Windows.Forms.Padding(0);
             this.bunifuIconButton1.Location = new System.Drawing.Point(240, 0);
-            this.bunifuIconButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bunifuIconButton1.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuIconButton1.Name = "bunifuIconButton1";
             this.bunifuIconButton1.RoundBorders = true;
             this.bunifuIconButton1.ShowBorders = true;
@@ -116,8 +117,8 @@
             // 
             this.MessageSettingsPanel.Controls.Add(this.bunifuButton2);
             this.MessageSettingsPanel.Controls.Add(this.bunifuButton1);
-            this.MessageSettingsPanel.Location = new System.Drawing.Point(144, 22);
-            this.MessageSettingsPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MessageSettingsPanel.Location = new System.Drawing.Point(145, 25);
+            this.MessageSettingsPanel.Margin = new System.Windows.Forms.Padding(4);
             this.MessageSettingsPanel.Name = "MessageSettingsPanel";
             this.MessageSettingsPanel.Size = new System.Drawing.Size(145, 30);
             this.MessageSettingsPanel.TabIndex = 2;
@@ -173,7 +174,7 @@
             this.bunifuButton2.IdleIconRightImage = null;
             this.bunifuButton2.IndicateFocus = false;
             this.bunifuButton2.Location = new System.Drawing.Point(32, 4);
-            this.bunifuButton2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bunifuButton2.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuButton2.Name = "bunifuButton2";
             this.bunifuButton2.OnDisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(191)))), ((int)(((byte)(191)))));
             this.bunifuButton2.OnDisabledState.BorderRadius = 1;
@@ -266,7 +267,7 @@
             this.bunifuButton1.IdleIconRightImage = null;
             this.bunifuButton1.IndicateFocus = false;
             this.bunifuButton1.Location = new System.Drawing.Point(85, 4);
-            this.bunifuButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bunifuButton1.Margin = new System.Windows.Forms.Padding(4);
             this.bunifuButton1.Name = "bunifuButton1";
             this.bunifuButton1.OnDisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(191)))), ((int)(((byte)(191)))));
             this.bunifuButton1.OnDisabledState.BorderRadius = 1;
@@ -317,8 +318,8 @@
             this.MessageSettingsButton.BorderRadius = 10;
             this.MessageSettingsButton.Image = global::Moria.Properties.Resources.alt_ok;
             this.MessageSettingsButton.IsCircle = true;
-            this.MessageSettingsButton.Location = new System.Drawing.Point(269, 4);
-            this.MessageSettingsButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MessageSettingsButton.Location = new System.Drawing.Point(272, 6);
+            this.MessageSettingsButton.Margin = new System.Windows.Forms.Padding(4);
             this.MessageSettingsButton.Name = "MessageSettingsButton";
             this.MessageSettingsButton.Size = new System.Drawing.Size(21, 21);
             this.MessageSettingsButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -341,9 +342,9 @@
             this.bunifuLabel1.Name = "bunifuLabel1";
             this.bunifuLabel1.Padding = new System.Windows.Forms.Padding(0, 10, 11, 10);
             this.bunifuLabel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.bunifuLabel1.Size = new System.Drawing.Size(239, 54);
+            this.bunifuLabel1.Size = new System.Drawing.Size(233, 59);
             this.bunifuLabel1.TabIndex = 0;
-            this.bunifuLabel1.Text = "asdd";
+            this.bunifuLabel1.Text = "asddasddasddasdd";
             this.bunifuLabel1.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.bunifuLabel1.TextFormat = Bunifu.UI.WinForms.BunifuLabel.TextFormattingOptions.Default;
             // 
@@ -355,7 +356,7 @@
             this.Controls.Add(this.bunifuGradientPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "UserControl2";
-            this.Size = new System.Drawing.Size(299, 55);
+            this.Size = new System.Drawing.Size(298, 61);
             this.Load += new System.EventHandler(this.UserControl2_Load);
             this.bunifuGradientPanel1.ResumeLayout(false);
             this.bunifuGradientPanel1.PerformLayout();
