@@ -38,7 +38,10 @@ namespace Moria
             "Yurtta sulh, cihanda sulh.\n-MUSTAFA KEMAL ATATÜRK",
             "Hayatta en hakiki mürşit ilimdir.\n-MUSTAFA KEMAL ATATÜRK",
             "Benim naçiz vücudum elbet \nbir gün toprak olacaktır, \n ancak \nTürkiye Cumhuriyeti ilelebet \npayidar kalacaktır.\n-MUSTAFA KEMAL ATATÜRK",
+<<<<<<< Updated upstream
             
+=======
+>>>>>>> Stashed changes
         };
 
         public string emailname { get; set; }

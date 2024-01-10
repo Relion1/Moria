@@ -1,0 +1,11 @@
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.csproj.AssemblyReference.cache
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.Form1.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.Form2.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.Form3.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.Properties.Resources.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.UserControl1.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.UserControl2.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.UserControl3.resources
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.csproj.GenerateResource.cache
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.exe.licenses
+C:\Users\edent\OneDrive\Belgeler\GitHub\moria_app\Moria\Moria\Moria\obj\Release\Moria.csproj.CoreCompileInputs.cache
